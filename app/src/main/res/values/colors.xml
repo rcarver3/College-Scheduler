@@ -10,4 +10,6 @@
     <color name="orange">#F5895C</color>
     <color name="purple_light">#B34ECC</color>
     <color name="cream">#F9F5E0</color>
+    <color name="text_color">#FFF0DDCA</color>
+    <color name="bg_color_card">#0E1D23</color>
 </resources>
