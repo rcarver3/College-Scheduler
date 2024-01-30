@@ -14,7 +14,8 @@
     <string name="toast_descriptor">something</string>
     <string name="test_class">ECE 2040</string>
     <string name="test_day">Tu Th</string>
-    <string name="test_time">3:30 - 4:45</string>
+    <string name="test_time">3:30 – 4:45</string>
+    <string name="icon">icon</string>
 
     <string-array name="test_names">
         <item>ECE 2040</item>
