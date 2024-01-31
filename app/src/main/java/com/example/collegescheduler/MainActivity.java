@@ -2,8 +2,7 @@ package com.example.collegescheduler;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.WindowManager;
-import android.widget.TextView;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,8 +13,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewInterface {
 
-    //private AppBarConfiguration mAppBarConfiguration;
-    //private ActivityMainBinding binding;
     ArrayList<ClassModel> classModels = new ArrayList<>();
     int[] classImages = {R.drawable.side_nav_bar, R.drawable.side_nav_bar,
                         R.drawable.side_nav_bar, R.drawable.side_nav_bar,
