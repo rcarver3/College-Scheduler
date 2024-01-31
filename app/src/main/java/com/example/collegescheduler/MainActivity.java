@@ -2,9 +2,11 @@ package com.example.collegescheduler;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_classes);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         RecyclerView recyclerView = findViewById(R.id.classRecyclerView);
 
@@ -46,14 +50,16 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
     @Override
     public void onItemClick(int position) {
-        showClassDetails();
+        showClassDetails(position);
     }
 
-    private void showClassDetails() {
+    private void showClassDetails(int position) {
         Intent intent = new Intent(this, ClassDetailsActivity.class);
-        TextView textView = findViewById(R.id.class_name);
-        String className = textView.getText().toString();
-        intent.putExtra("Name", className);
+
+        intent.putExtra("NAME", classModels.get(position).getClassName());
+        intent.putExtra("DAY", classModels.get(position).getClassDay());
+        intent.putExtra("TIME", classModels.get(position).getClassTime());
+
         startActivity(intent);
     }
 }

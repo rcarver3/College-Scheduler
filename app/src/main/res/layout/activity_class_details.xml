@@ -4,17 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_color_card"
     tools:context=".ClassDetailsActivity">
 
     <TextView
-        android:id="@+id/temp_text"
+        android:id="@+id/class_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Test_text"
+        android:layout_marginStart="32dp"
+        android:text="@string/test_time"
+        android:textColor="@color/text_color"
         android:textSize="34sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/class_day"
+        app:layout_constraintTop_toBottomOf="@+id/class_name"
+        app:layout_constraintVertical_bias="0.027" />
+
+    <TextView
+        android:id="@+id/class_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/test_class"
+        android:textColor="@color/text_color"
+        android:textSize="60sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/class_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/test_day"
+        android:textColor="@color/text_color"
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/class_name" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

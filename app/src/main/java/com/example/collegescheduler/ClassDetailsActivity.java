@@ -12,9 +12,16 @@ public class ClassDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_details);
 
-        TextView textView = findViewById(R.id.temp_text);
+        TextView textView0 = findViewById(R.id.class_name);
+        TextView textView1 = findViewById(R.id.class_day);
+        TextView textView2 = findViewById(R.id.class_time);
 
         String className = getIntent().getStringExtra("NAME");
-        textView.setText(className);
+        String classDay = getIntent().getStringExtra("DAY");
+        String classTime = getIntent().getStringExtra("TIME");
+
+        textView0.setText(className);
+        textView1.setText(classDay);
+        textView2.setText(classTime);
     }
 }
