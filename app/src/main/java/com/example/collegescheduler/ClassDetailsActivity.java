@@ -45,7 +45,7 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         Class_Exams_RecyclerViewAdapter examsAdapter = new Class_Exams_RecyclerViewAdapter(this,
                 classModels, this);
         examsRecyclerView.setAdapter(examsAdapter);
-        examsRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        examsRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
     }
 
     private void setUpClassModels() {
@@ -60,6 +60,11 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
 
     @Override
     public void onItemClick(int position) {
+
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
 
     }
 }

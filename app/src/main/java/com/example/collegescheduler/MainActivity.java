@@ -1,9 +1,11 @@
 package com.example.collegescheduler;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements RecyclerViewInterface {
 
     ArrayList<ClassModel> classModels = new ArrayList<>();
+
+    Class_RecyclerViewAdapter adapter;
     int[] classImages = {R.drawable.side_nav_bar, R.drawable.side_nav_bar,
                         R.drawable.side_nav_bar, R.drawable.side_nav_bar,
                         R.drawable.side_nav_bar};
@@ -29,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
         setUpClassModels();
 
-        Class_RecyclerViewAdapter adapter = new Class_RecyclerViewAdapter(this,
+        adapter = new Class_RecyclerViewAdapter(this,
                 classModels, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -48,6 +52,30 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     @Override
     public void onItemClick(int position) {
         showClassDetails(position);
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle("Delete?");
+        builder.setMessage(String.format("Are you sure you want to delete %s?", classModels.get(position).getClassName()));
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        classModels.remove(position);
+                        adapter.notifyItemRemoved(position);
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void showClassDetails(int position) {
