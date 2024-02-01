@@ -3,6 +3,8 @@ package com.example.collegescheduler;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 
 
 import androidx.appcompat.app.AlertDialog;
@@ -11,13 +13,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewInterface {
 
     ArrayList<ClassModel> classModels = new ArrayList<>();
-
+    String[] classNames;
+    String[] classDays;
+    String[] classTimes;
     Class_RecyclerViewAdapter adapter;
+    FloatingActionButton addBtn;
+
     int[] classImages = {R.drawable.side_nav_bar, R.drawable.side_nav_bar,
                         R.drawable.side_nav_bar, R.drawable.side_nav_bar,
                         R.drawable.side_nav_bar};
@@ -25,13 +33,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_classes);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("");
+
+        addBtn = findViewById(R.id.add_btn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addClassModel();
+            }
+        });
 
         RecyclerView recyclerView = findViewById(R.id.classRecyclerView);
-
-        setUpClassModels();
 
         adapter = new Class_RecyclerViewAdapter(this,
                 classModels, this);
@@ -39,15 +54,94 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void setUpClassModels() {
-        String[] classNames = getResources().getStringArray(R.array.test_names);
-        String[] classDays = getResources().getStringArray(R.array.test_days);
-        String[] classTimes = getResources().getStringArray(R.array.test_times);
-
-        for (int i = 0; i < classNames.length; i++) {
-            classModels.add(new ClassModel(classNames[i], classDays[i], classTimes[i], classImages[i]));
-        }
+    private void addClassModel() {
+        ClassModel model = new ClassModel();
+        collectClassName(model);
     }
+
+    private void collectClassName(ClassModel model) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Add Class");
+        alert.setMessage("Class Name:");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                model.setClassName(input.getText().toString());
+                collectClassDay(model);
+                // Do something with value!
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+    }
+
+    private void collectClassDay(ClassModel model) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Add Class");
+        alert.setMessage("Class Days:");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                model.setClassDay(input.getText().toString());
+                collectClassTime(model);
+                // Do something with value!
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+    }
+
+    private void collectClassTime(ClassModel model) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Add Class");
+        alert.setMessage("Class Time:");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                model.setClassTime(input.getText().toString());
+                model.setImage(R.drawable.side_nav_bar);
+                classModels.add(0, model);
+                adapter.notifyItemInserted(0);
+                // Do something with value!
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+    }
+
 
     @Override
     public void onItemClick(int position) {

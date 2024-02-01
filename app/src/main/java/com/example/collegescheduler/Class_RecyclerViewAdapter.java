@@ -40,6 +40,8 @@ public class Class_RecyclerViewAdapter extends RecyclerView.Adapter<Class_Recycl
         holder.tvDay.setText(classModels.get(position).getClassDay());
         holder.tvTime.setText(classModels.get(position).getClassTime());
         holder.imageView.setImageResource(classModels.get(position).getImage());
+        int i = classModels.get(position).getAssignments().size();
+        holder.assignDue.setText(Integer.toString(i));
 
     }
 
@@ -51,7 +53,7 @@ public class Class_RecyclerViewAdapter extends RecyclerView.Adapter<Class_Recycl
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView tvName, tvDay, tvTime;
+        TextView tvName, tvDay, tvTime, assignDue;
         public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
@@ -59,6 +61,7 @@ public class Class_RecyclerViewAdapter extends RecyclerView.Adapter<Class_Recycl
             tvName = itemView.findViewById(R.id.class_name);
             tvDay = itemView.findViewById(R.id.class_day);
             tvTime = itemView.findViewById(R.id.class_time);
+            assignDue = itemView.findViewById(R.id.assignments_due);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

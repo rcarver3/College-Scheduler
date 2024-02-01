@@ -1,17 +1,21 @@
 package com.example.collegescheduler;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class ClassDetailsActivity extends AppCompatActivity implements RecyclerViewInterface {
     ArrayList<ClassModel> classModels = new ArrayList<>();
+    ImageButton backBtn;
     int[] classImages = {R.drawable.side_nav_bar, R.drawable.side_nav_bar,
             R.drawable.side_nav_bar, R.drawable.side_nav_bar,
             R.drawable.side_nav_bar};
@@ -19,6 +23,12 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_details);
+
+        Toolbar toolbar = findViewById(R.id.appbar_main);
+        setSupportActionBar(toolbar);
+        setTitle("");
+
+        backBtn = findViewById(R.id.backButton);
 
         TextView textView0 = findViewById(R.id.class_name);
         TextView textView1 = findViewById(R.id.class_day);
@@ -46,6 +56,13 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
                 classModels, this);
         examsRecyclerView.setAdapter(examsAdapter);
         examsRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void setUpClassModels() {
