@@ -4,15 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:foregroundGravity="bottom"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:background="@drawable/side_nav_bar"
-        android:layout_height="90sp"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_class"
+        android:layout_width="match_parent"
+        android:layout_height="95sp"
+        android:background="@color/orange"
         android:gravity="bottom"
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent" />
+        android:theme="@style/Theme.CollegeScheduler.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_btn"
