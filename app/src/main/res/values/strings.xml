@@ -20,6 +20,10 @@
     <string name="exams_header">Exams:</string>
     <string name="title">College Scheduler</string>
     <string name="temp_due">0</string>
+    <string name="no_classes_yet">Tap the plus button to add classes!</string>
+    <string name="add_exam">Exam</string>
+    <string name="add_assignments">Assignment</string>
+    <string name="expansion">ACTIONS</string>
 
     <string-array name="test_names">
         <item>ECE 2040</item>

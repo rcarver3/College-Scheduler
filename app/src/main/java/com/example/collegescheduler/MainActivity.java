@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 
 import androidx.appcompat.app.AlertDialog;
@@ -21,16 +23,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements RecyclerViewInterface {
 
     ArrayList<ClassModel> classModels = new ArrayList<>();
-    String[] classNames;
-    String[] classDays;
-    String[] classTimes;
     Class_RecyclerViewAdapter adapter;
-    FloatingActionButton addBtn;
 
-
-    int[] classImages = {R.drawable.side_nav_bar, R.drawable.side_nav_bar,
-                        R.drawable.side_nav_bar, R.drawable.side_nav_bar,
-                        R.drawable.side_nav_bar};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
             }
         });
 
+        addClasses = findViewById(R.id.empty_classes);
+
         RecyclerView recyclerView = findViewById(R.id.classRecyclerView);
 
         adapter = new Class_RecyclerViewAdapter(this,
@@ -61,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     private void addClassModel() {
         ClassModel model = new ClassModel();
         collectClassName(model);
+        addClasses.setText("");
     }
 
     private void collectClassName(ClassModel model) {
@@ -130,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 model.setClassTime(input.getText().toString());
-                model.setImage(R.drawable.side_nav_bar);
                 classModels.add(0, model);
                 adapter.notifyItemInserted(0);
                 // Do something with value!
@@ -164,6 +160,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                     public void onClick(DialogInterface dialog, int which) {
                         classModels.remove(position);
                         adapter.notifyItemRemoved(position);
+                        if (classModels.isEmpty()) {
+                            addClasses.setText(R.string.no_classes_yet);
+                        }
                     }
                 });
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -182,6 +181,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         intent.putExtra("NAME", classModels.get(position).getClassName());
         intent.putExtra("DAY", classModels.get(position).getClassDay());
         intent.putExtra("TIME", classModels.get(position).getClassTime());
+        intent.putExtra("ASSIGNMENTS", classModels.get(position).getAssignments());
+        intent.putExtra("EXAMS", classModels.get(position).getExams());
 
         startActivity(intent);
     }

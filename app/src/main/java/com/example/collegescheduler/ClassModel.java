@@ -8,13 +8,8 @@ public class ClassModel {
     String className;
     String classDay;
     String classTime;
-    List<AssignmentModel> assignments;
-    List<ExamModel> exams;
-    int image;
-
-    public void setImage(int image) {
-        this.image = image;
-    }
+    ArrayList<AssignmentModel> assignments;
+    ArrayList<ExamModel> exams;
     public void setClassName(String className) {
         this.className = className;
     }
@@ -28,17 +23,16 @@ public class ClassModel {
     }
 
     public ClassModel(String className, String classDay,
-                      String classTime, int image) {
+                      String classTime) {
         this.className = className;
         this.classDay = classDay;
         this.classTime = classTime;
-        this.image = image;
         this.assignments = new ArrayList<>();
         this.exams = new ArrayList<>();
     }
 
     public ClassModel() {
-        this(null, null, null, R.drawable.side_nav_bar);
+        this(null, null, null);
     }
 
     public String getClassName() {
@@ -53,15 +47,12 @@ public class ClassModel {
         return classTime;
     }
 
-    public int getImage() {
-        return image;
-    }
 
-    public List<AssignmentModel> getAssignments() {
+    public ArrayList<AssignmentModel> getAssignments() {
         return assignments;
     }
 
-    public List<ExamModel> getExams() {
+    public ArrayList<ExamModel> getExams() {
         return exams;
     }
 }

@@ -17,6 +17,7 @@ tools:context=".MainActivity">
         app:popupTheme="@style/Theme.CollegeScheduler.PopupOverlay" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -50,17 +51,15 @@ tools:context=".MainActivity">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ImageButton
         android:id="@+id/add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/GradientFabRed"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
         android:contentDescription="@string/toast_descriptor"
-        android:scaleType="centerInside"
-        app:backgroundTint="#DC7384"
-        app:maxImageSize="40dp"
         app:srcCompat="@drawable/baseline_add_24" />
 
 

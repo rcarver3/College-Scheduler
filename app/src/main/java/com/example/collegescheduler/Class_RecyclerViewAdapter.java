@@ -39,7 +39,7 @@ public class Class_RecyclerViewAdapter extends RecyclerView.Adapter<Class_Recycl
         holder.tvName.setText(classModels.get(position).getClassName());
         holder.tvDay.setText(classModels.get(position).getClassDay());
         holder.tvTime.setText(classModels.get(position).getClassTime());
-        holder.imageView.setImageResource(classModels.get(position).getImage());
+        holder.imageView.setImageResource(R.drawable.side_nav_bar);
         int i = classModels.get(position).getAssignments().size();
         holder.assignDue.setText(Integer.toString(i));
 
