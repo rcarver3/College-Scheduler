@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         setSupportActionBar(toolbar);
         setTitle("");
 
-
+        addClasses = findViewById(R.id.empty_classes);
 
         addBtn = findViewById(R.id.add_btn);
         addBtn.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     private void addClassModel() {
         ClassModel model = new ClassModel();
         collectClassName(model);
+        addClasses.setText("");
     }
 
     private void collectClassName(ClassModel model) {
