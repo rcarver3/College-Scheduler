@@ -22,9 +22,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewInterface {
 
-    ArrayList<ClassModel> classModels = new ArrayList<>();
-    Class_RecyclerViewAdapter adapter;
 
+    static ArrayList<ClassModel> classModels = new ArrayList<>();
+    static Class_RecyclerViewAdapter adapter;
+    ImageButton addBtn;
+    TextView addClasses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     @Override
     public void onItemClick(int position) {
         showClassDetails(position);
+        adapter.notifyItemChanged(position);
     }
 
     @Override
@@ -181,8 +184,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         intent.putExtra("NAME", classModels.get(position).getClassName());
         intent.putExtra("DAY", classModels.get(position).getClassDay());
         intent.putExtra("TIME", classModels.get(position).getClassTime());
-        intent.putExtra("ASSIGNMENTS", classModels.get(position).getAssignments());
-        intent.putExtra("EXAMS", classModels.get(position).getExams());
+        intent.putExtra("POS", position);
 
         startActivity(intent);
     }

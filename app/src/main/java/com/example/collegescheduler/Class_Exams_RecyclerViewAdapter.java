@@ -13,14 +13,14 @@ import java.util.ArrayList;
 
 public class Class_Exams_RecyclerViewAdapter extends RecyclerView.Adapter<Class_Exams_RecyclerViewAdapter.MyViewHolder> {
     Context context;
-    ArrayList<ClassModel> classModels;
+    ArrayList<ExamModel> examModels;
 
     private final RecyclerViewInterface recyclerViewInterface;
 
-    public Class_Exams_RecyclerViewAdapter(Context context, ArrayList<ClassModel> classModels,
+    public Class_Exams_RecyclerViewAdapter(Context context, ArrayList<ExamModel> examModels,
                                            RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
-        this.classModels = classModels;
+        this.examModels = examModels;
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
@@ -35,13 +35,13 @@ public class Class_Exams_RecyclerViewAdapter extends RecyclerView.Adapter<Class_
 
     @Override
     public void onBindViewHolder(@NonNull Class_Exams_RecyclerViewAdapter.MyViewHolder holder, int position) {
-        holder.tvName.setText(classModels.get(position).getClassName());
-        holder.tvDay.setText(classModels.get(position).getClassDay());
+        holder.tvName.setText(examModels.get(position).getName());
+        holder.tvDay.setText(examModels.get(position).getDate());
     }
 
     @Override
     public int getItemCount() {
-        return classModels.size();
+        return examModels.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
