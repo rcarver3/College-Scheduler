@@ -18,8 +18,9 @@ import java.util.ArrayList;
 
 public class ClassDetailsActivity extends AppCompatActivity implements RecyclerViewInterface {
     Context context;
-    ArrayList<ClassModel> classModels = new ArrayList<>();
+    ArrayList<ClassModel> classModels = MainActivity.classModels;
     ArrayList<AssignmentModel> assignmentModels;
+    ArrayList<ExamModel> examModels;
     ImageButton backBtn;
     ImageButton addInfo;
     TextView addExamText;
@@ -28,12 +29,14 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
     Boolean isAllButtonsVisible;
     Class_Assignments_RecyclerViewAdapter assignmentsAdapter;
     Class_Exams_RecyclerViewAdapter examsAdapter;
+    int position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_details);
         context = this;
 
+        position = getIntent().getIntExtra("POS", 0);
         addInfo = findViewById(R.id.more_actions);
         addExamText = findViewById(R.id.add_exam_text);
         addAssignments = findViewById(R.id.add_assignments);
@@ -78,7 +81,8 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         String className = getIntent().getStringExtra("NAME");
         String classDay = getIntent().getStringExtra("DAY");
         String classTime = getIntent().getStringExtra("TIME");
-        assignmentModels = (ArrayList<AssignmentModel>) getIntent().getSerializableExtra("ASSIGNMENTS");
+        assignmentModels = MainActivity.classModels.get(position).getAssignments();
+        examModels = MainActivity.classModels.get(position).getExams();
 
         textView0.setText(className);
         textView1.setText(classDay);
@@ -93,7 +97,7 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         assignmentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         examsAdapter = new Class_Exams_RecyclerViewAdapter(this,
-                classModels, this);
+                examModels, this);
         examsRecyclerView.setAdapter(examsAdapter);
         examsRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 
@@ -114,7 +118,8 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
     }
     private void addAssignment() {
         AssignmentModel assignment = new AssignmentModel();
-        collectClassName(assignment);
+        collectAssignmentName(assignment);
+        MainActivity.adapter.notifyItemChanged(position);
 
         addAssignments.setVisibility(View.GONE);
         addAssignmentsText.setVisibility(View.GONE);
@@ -124,6 +129,10 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
     }
 
     private void addExam() {
+        ExamModel exam = new ExamModel();
+        collectExamName(exam);
+        MainActivity.adapter.notifyItemChanged(position);
+
         addAssignments.setVisibility(View.GONE);
         addAssignmentsText.setVisibility(View.GONE);
         addExamText.setVisibility(View.GONE);
@@ -132,7 +141,7 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
 
     }
 
-    private void collectClassName(AssignmentModel model) {
+    private void collectAssignmentName(AssignmentModel model) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle("Add Assignment");
@@ -145,7 +154,7 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 model.setName(input.getText().toString());
-                collectClassDay(model);
+                collectDueDate(model);
                 // Do something with value!
             }
         });
@@ -159,7 +168,7 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         alert.show();
     }
 
-    private void collectClassDay(AssignmentModel model) {
+    private void collectDueDate(AssignmentModel model) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle("Add Assignment");
@@ -172,7 +181,7 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 model.setDueDate(input.getText().toString());
-                collectClassTime(model);
+                collectDueTime(model);
                 // Do something with value!
             }
         });
@@ -186,7 +195,7 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         alert.show();
     }
 
-    private void collectClassTime(AssignmentModel model) {
+    private void collectDueTime(AssignmentModel model) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle("Add Assignment");
@@ -201,6 +210,7 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
                 model.setDueTime(input.getText().toString());
                 assignmentModels.add(0, model);
                 assignmentsAdapter.notifyItemInserted(0);
+                classModels.get(position).setAssignments(assignmentModels);
                 // Do something with value!
             }
         });
@@ -214,11 +224,67 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         alert.show();
     }
 
+    private void collectExamName(ExamModel model) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Add Exam");
+        alert.setMessage("Exam Name:");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                model.setName(input.getText().toString());
+                collectExamDate(model);
+                // Do something with value!
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+    }
+
+    private void collectExamDate(ExamModel model) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Add Assignment");
+        alert.setMessage("Due Time:");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                model.setDate(input.getText().toString());
+                examModels.add(0, model);
+                examsAdapter.notifyItemInserted(0);
+                classModels.get(position).setExams(examModels);
+                // Do something with value!
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+    }
 
     @Override
     public void onItemClick(int position) {
 
     }
+
 
     @Override
     public void onItemLongClick(int position) {
@@ -230,9 +296,9 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        classModels.remove(position);
+                        assignmentModels.remove(position);
                         assignmentsAdapter.notifyItemRemoved(position);
-                        if (classModels.isEmpty()) {
+                        if (assignmentModels.isEmpty()) {
                             // addClasses.setText(R.string.no_classes_yet);
                         }
                     }

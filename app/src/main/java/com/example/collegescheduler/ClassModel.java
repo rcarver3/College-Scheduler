@@ -21,6 +21,8 @@ public class ClassModel {
     public void setClassTime(String classTime) {
         this.classTime = classTime;
     }
+    public void setAssignments(ArrayList<AssignmentModel> assignments) {this.assignments = assignments; }
+    public void setExams(ArrayList<ExamModel> exams) {this.exams = exams;}
 
     public ClassModel(String className, String classDay,
                       String classTime) {

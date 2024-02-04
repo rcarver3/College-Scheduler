@@ -8,11 +8,23 @@ public class ExamModel {
         this.name = name;
         this.date = date;
     }
+
+    public ExamModel() {
+        this(null, null);
+    }
     public String getName() {
         return name;
     }
 
     public String getDate() {
         return date;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
