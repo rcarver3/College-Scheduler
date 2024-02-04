@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     private void addClassModel() {
         ClassModel model = new ClassModel();
         collectClassName(model);
-        addClasses.setText("");
     }
 
     private void collectClassName(ClassModel model) {
