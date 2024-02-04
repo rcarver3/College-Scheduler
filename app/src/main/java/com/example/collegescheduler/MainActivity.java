@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
             }
         });
 
-        addClasses = findViewById(R.id.empty_classes);
+        //addClasses = findViewById(R.id.empty_classes);
 
         RecyclerView recyclerView = findViewById(R.id.classRecyclerView);
 
