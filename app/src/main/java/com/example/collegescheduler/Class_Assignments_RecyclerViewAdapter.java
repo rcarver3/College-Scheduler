@@ -13,14 +13,14 @@ import java.util.ArrayList;
 
 public class Class_Assignments_RecyclerViewAdapter extends RecyclerView.Adapter<Class_Assignments_RecyclerViewAdapter.MyViewHolder> {
     Context context;
-    ArrayList<ClassModel> classModels;
+    ArrayList<AssignmentModel> assignmentModels;
 
     private final RecyclerViewInterface recyclerViewInterface;
 
-    public Class_Assignments_RecyclerViewAdapter(Context context, ArrayList<ClassModel> classModels,
+    public Class_Assignments_RecyclerViewAdapter(Context context, ArrayList<AssignmentModel> assignmentModels,
                                                 RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
-        this.classModels = classModels;
+        this.assignmentModels = assignmentModels;
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
@@ -35,15 +35,15 @@ public class Class_Assignments_RecyclerViewAdapter extends RecyclerView.Adapter<
 
     @Override
     public void onBindViewHolder(@NonNull Class_Assignments_RecyclerViewAdapter.MyViewHolder holder, int position) {
-        holder.tvName.setText(classModels.get(position).getClassName());
-        holder.tvDay.setText(classModels.get(position).getClassDay());
-        holder.tvTime.setText(classModels.get(position).getClassTime());
+        holder.tvName.setText(assignmentModels.get(position).getName());
+        holder.tvDay.setText(assignmentModels.get(position).getDueDate());
+        holder.tvTime.setText(assignmentModels.get(position).getDueTime());
 
     }
 
     @Override
     public int getItemCount() {
-        return classModels.size();
+        return assignmentModels.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
