@@ -30,7 +30,21 @@ tools:context=".MainActivity">
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/title"
+            android:textAlignment="viewStart"
+            android:textColor="@color/cream"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -47,17 +61,11 @@ tools:context=".MainActivity">
         app:srcCompat="@drawable/baseline_add_24" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/empty_classes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginBottom="18dp"
-        android:text="@string/title"
-        android:textAlignment="viewStart"
-        android:textColor="@color/cream"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_anchor="@+id/toolbar"
+        android:text="@string/no_classes_yet"
+        app:layout_anchor="@+id/constraintLayout"
         app:layout_anchorGravity="center" />
 
 
