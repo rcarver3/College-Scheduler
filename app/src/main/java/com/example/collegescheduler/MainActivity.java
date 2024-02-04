@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     Class_RecyclerViewAdapter adapter;
     FloatingActionButton addBtn;
 
+
     int[] classImages = {R.drawable.side_nav_bar, R.drawable.side_nav_bar,
                         R.drawable.side_nav_bar, R.drawable.side_nav_bar,
                         R.drawable.side_nav_bar};
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("");
+
+
 
         addBtn = findViewById(R.id.add_btn);
         addBtn.setOnClickListener(new View.OnClickListener() {

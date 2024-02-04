@@ -8,11 +8,13 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:background="@drawable/side_nav_bar"
-        android:layout_height="90sp"
-        android:gravity="bottom"
         android:id="@+id/toolbar"
-        android:layout_width="match_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="90sp"
+        android:background="@drawable/side_nav_bar"
+        android:gravity="bottom"
+        app:layout_anchor="@+id/toolbar"
+        app:layout_anchorGravity="bottom|center" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_btn"
@@ -24,5 +26,8 @@
         android:contentDescription="@string/toast_descriptor"
         app:backgroundTint="#DC7384"
         app:srcCompat="@android:drawable/ic_dialog_email" />
+
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
