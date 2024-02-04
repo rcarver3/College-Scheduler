@@ -92,13 +92,6 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         assignmentsRecyclerView.setAdapter(assignmentsAdapter);
         assignmentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        addInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addAssignment();
-            }
-        });
-
         examsAdapter = new Class_Exams_RecyclerViewAdapter(this,
                 classModels, this);
         examsRecyclerView.setAdapter(examsAdapter);
@@ -117,7 +110,7 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         addAssignmentsText.setVisibility(View.VISIBLE);
         addExamText.setVisibility(View.VISIBLE);
 
-        isAllButtonsVisible = false;
+        isAllButtonsVisible = true;
     }
     private void addAssignment() {
         AssignmentModel assignment = new AssignmentModel();
@@ -142,8 +135,8 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
     private void collectClassName(AssignmentModel model) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Add Class");
-        alert.setMessage("Class Name:");
+        alert.setTitle("Add Assignment");
+        alert.setMessage("Assignment Name:");
 
         // Set an EditText view to get user input
         final EditText input = new EditText(this);
@@ -169,8 +162,8 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
     private void collectClassDay(AssignmentModel model) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Add Class");
-        alert.setMessage("Class Days:");
+        alert.setTitle("Add Assignment");
+        alert.setMessage("Due Date:");
 
 // Set an EditText view to get user input
         final EditText input = new EditText(this);
@@ -196,8 +189,8 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
     private void collectClassTime(AssignmentModel model) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Add Class");
-        alert.setMessage("Class Time:");
+        alert.setTitle("Add Assignment");
+        alert.setMessage("Due Time:");
 
 // Set an EditText view to get user input
         final EditText input = new EditText(this);
@@ -229,6 +222,28 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
 
     @Override
     public void onItemLongClick(int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle("Delete?");
+        builder.setMessage(String.format("Are you sure you want to delete %s?", assignmentModels.get(position).getName()));
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        classModels.remove(position);
+                        assignmentsAdapter.notifyItemRemoved(position);
+                        if (classModels.isEmpty()) {
+                            // addClasses.setText(R.string.no_classes_yet);
+                        }
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
 
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
