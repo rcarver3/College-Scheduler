@@ -7,6 +7,15 @@
     tools:context=".CalendarModel"
     >
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/side_nav_bar"
+        android:gravity="bottom"
+        android:popupTheme="@style/Theme.CollegeScheduler.PopupOverlay" />
+
+
 
     <CalendarView
         android:id="@+id/calendarView"
