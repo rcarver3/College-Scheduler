@@ -13,36 +13,13 @@
         android:theme="@style/Theme.CollegeScheduler.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".ui.MainActivity2"
-            android:exported="false"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/Theme.CollegeScheduler.NoActionBar" />
-        <activity
-            android:name=".MainActivity2"
-            android:exported="false"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/Theme.CollegeScheduler.NoActionBar" />
-        <activity
-            android:name=".ToDoFrr"
-            android:exported="false"
-            android:label="@string/title_activity_to_do_frr"
-            android:theme="@style/Theme.CollegeScheduler.NoActionBar" />
-        <activity
-            android:name=".ToDoFr"
-            android:exported="false"
-            android:label="@string/title_activity_to_do_fr"
-            android:theme="@style/Theme.CollegeScheduler.NoActionBar" />
-        <activity
-            android:name=".Profile"
-            android:exported="false"
-            android:label="@string/title_activity_profile" />
-        <activity
-            android:name=".ToDoList"
-            android:exported="false"
-            android:label="@string/title_activity_to_do_list"
-            android:theme="@style/Theme.CollegeScheduler.NoActionBar" />
-        <activity
             android:name=".ClassDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ToDoListFr"
+            android:exported="false" />
+        <activity
+            android:name=".CalendarModel"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
