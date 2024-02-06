@@ -28,6 +28,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     ImageButton addBtn;
     TextView addClasses;
 
+    Button toDoPageBtn;
+
+    Button calendarBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +58,27 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                 classModels, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        toDoPageBtn = findViewById(R.id.toDoPageBtn);
+        toDoPageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ToDoListFr.class);
+                startActivity(intent);
+            }
+        });
+
+        calendarBtn = findViewById(R.id.calendarBtn);
+        calendarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CalendarModel.class);
+                startActivity(intent);
+            }
+        });
+
+
+
     }
 
     private void addClassModel() {
