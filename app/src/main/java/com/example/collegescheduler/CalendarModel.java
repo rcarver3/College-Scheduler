@@ -1,6 +1,9 @@
 package com.example.collegescheduler;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.icu.util.Calendar;
 import android.widget.Toast;
@@ -15,6 +18,8 @@ import java.util.Locale;
 public class  CalendarModel extends AppCompatActivity {
     CalendarView calendarView;
     Calendar calendar;
+
+    Button homeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +36,18 @@ public class  CalendarModel extends AppCompatActivity {
                 Toast.makeText(CalendarModel.this, day + "/" + (month + 1) + "/" + year, Toast.LENGTH_SHORT).show();
             }
         });
+
+        homeBtn = findViewById(R.id.toDoPageBtn3);
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CalendarModel.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
     public void getDate(){
         long date = calendarView.getDate();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());

@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
     Button toDoPageBtn;
 
+    Button exitBtn;
+
     Button calendarBtn;
 
     @Override
@@ -58,6 +60,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                 classModels, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        exitBtn = findViewById(R.id.toDoPageBtn4);
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         toDoPageBtn = findViewById(R.id.toDoPageBtn);
         toDoPageBtn.setOnClickListener(new View.OnClickListener() {
