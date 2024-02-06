@@ -104,4 +104,5 @@
     <string name="empty_assignments">Tap the plus button to add assignments!</string>
     <string name="empty_exams">Tap the plus button to add exams!</string>
     <string name="Exit">Exit</string>
+    <string name="nice_day">Have a good day!</string>
 </resources>
