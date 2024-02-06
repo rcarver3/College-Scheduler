@@ -23,7 +23,6 @@ public class  CalendarModel extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarView);
         calendar = Calendar.getInstance();
 
-        setDate(4, 2, 2024);
         getDate();
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -39,14 +38,5 @@ public class  CalendarModel extends AppCompatActivity {
         calendar.setTimeInMillis(date);
         String selected_date = simpleDateFormat.format(calendar.getTime());
         Toast.makeText(this, selected_date, Toast.LENGTH_SHORT).show();
-    }
-
-
-    public void setDate(int day, int month, int year) {
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month - 1);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        long milli = calendar.getTimeInMillis();
-        calendarView.setDate(milli);
     }
 }

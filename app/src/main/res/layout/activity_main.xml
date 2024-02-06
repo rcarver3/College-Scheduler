@@ -8,18 +8,35 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="97dp"
-        android:background="@drawable/side_nav_bar"
-        android:gravity="bottom"
-        app:popupTheme="@style/Theme.CollegeScheduler.PopupOverlay" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="97dp"
+            android:background="@drawable/side_nav_bar"
+            android:gravity="bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/Theme.CollegeScheduler.PopupOverlay" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="291dp"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:textAlignment="viewStart"
+            android:textColor="@color/cream"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar"
+            app:layout_constraintStart_toStartOf="@+id/toolbar"
+            app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
         <ImageButton
             android:id="@+id/add_btn"
@@ -50,14 +67,14 @@ tools:context=".MainActivity">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/classRecyclerView"
-            android:layout_width="414dp"
-            android:layout_height="570dp"
-            app:layout_constraintBottom_toTopOf="@+id/toolbar2"
+            android:layout_width="410dp"
+            android:layout_height="647dp"
+            app:layout_constraintBottom_toTopOf="@+id/add_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.552" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintVertical_bias="0.133" />
 
         <Button
             android:id="@+id/toDoPageBtn"
@@ -92,18 +109,6 @@ tools:context=".MainActivity">
         android:layout_height="wrap_content"
         android:text="@string/no_classes_yet"
         app:layout_anchor="@+id/constraintLayout"
-        app:layout_anchorGravity="center" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="291dp"
-        android:layout_height="wrap_content"
-        android:text="@string/title"
-        android:textAlignment="viewStart"
-        android:textColor="@color/cream"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        app:layout_anchor="@+id/toolbar"
         app:layout_anchorGravity="center" />
 
 
