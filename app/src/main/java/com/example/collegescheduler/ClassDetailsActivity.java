@@ -15,6 +15,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import android.app.DatePickerDialog;
+import android.widget.DatePicker;
+import java.util.Calendar;
+
 
 public class ClassDetailsActivity extends AppCompatActivity implements RecyclerViewInterface {
     Context context;
@@ -180,30 +184,25 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
     }
 
     private void collectDueDate(AssignmentModel model) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        alert.setTitle("Add Assignment");
-        alert.setMessage("Due Date:");
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        // Format the date selected by the user
+                        String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        model.setDueDate(selectedDate);
+                        collectDueTime(model); // Proceed to collect due time
+                    }
+                }, year, month, day);
 
-// Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                model.setDueDate(input.getText().toString());
-                collectDueTime(model);
-                // Do something with value!
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.show();
+        datePickerDialog.setTitle("Select Due Date");
+        datePickerDialog.show();
     }
 
     private void collectDueTime(AssignmentModel model) {
@@ -263,32 +262,28 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
     }
 
     private void collectExamDate(ExamModel model) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        alert.setTitle("Add Assignment");
-        alert.setMessage("Due Time:");
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        // Format the date selected by the user
+                        String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        model.setDate(selectedDate);
+                        // Here, you can proceed to the next step, if there is any, or update your model and UI
+                        examModels.add(0, model);
+                        examsAdapter.notifyItemInserted(0);
+                        classModels.get(position).setExams(examModels);
+                    }
+                }, year, month, day);
 
-// Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                model.setDate(input.getText().toString());
-                examModels.add(0, model);
-                examsAdapter.notifyItemInserted(0);
-                classModels.get(position).setExams(examModels);
-                // Do something with value!
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.show();
+        datePickerDialog.setTitle("Select Exam Date");
+        datePickerDialog.show();
     }
 
     @Override
