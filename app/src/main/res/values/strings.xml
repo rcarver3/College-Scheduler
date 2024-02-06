@@ -98,4 +98,6 @@
     <string name="title_activity_to_do_fr">ToDoFr</string>
     <string name="title_activity_to_do_frr">ToDoFrr</string>
     <string name="title_activity_main2">MainActivity2</string>
+    <string name="empty_assignments">Tap the plus button to add assignments!</string>
+    <string name="empty_exams">Tap the plus button to add exams!</string>
 </resources>
