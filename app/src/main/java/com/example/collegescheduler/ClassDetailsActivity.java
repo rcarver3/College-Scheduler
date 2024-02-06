@@ -21,12 +21,16 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
     ArrayList<ClassModel> classModels = MainActivity.classModels;
     ArrayList<AssignmentModel> assignmentModels;
     ArrayList<ExamModel> examModels;
+    TextView instructor;
     ImageButton backBtn;
     ImageButton addInfo;
     TextView addExamText;
     ImageButton addAssignments;
     TextView addAssignmentsText;
     Boolean isAllButtonsVisible;
+    TextView emptyAssignments;
+    TextView emptyExams;
+
     Class_Assignments_RecyclerViewAdapter assignmentsAdapter;
     Class_Exams_RecyclerViewAdapter examsAdapter;
     int position;
@@ -43,6 +47,10 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         addAssignmentsText = findViewById(R.id.add_assignment_text);
 
         isAllButtonsVisible = false;
+
+        emptyAssignments = findViewById(R.id.empty_assignments);
+        emptyExams = findViewById(R.id.empty_exams);
+        instructor = findViewById(R.id.instructor);
 
         Toolbar toolbar = findViewById(R.id.appbar_main);
         setSupportActionBar(toolbar);
@@ -87,6 +95,7 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         textView0.setText(className);
         textView1.setText(classDay);
         textView2.setText(classTime);
+        instructor.setText(getIntent().getStringExtra("INSTRUCTOR"));
 
         RecyclerView assignmentsRecyclerView = findViewById(R.id.assignmentsRecyclerView);
         RecyclerView examsRecyclerView = findViewById(R.id.examsRecyclerView);
@@ -120,6 +129,7 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         AssignmentModel assignment = new AssignmentModel();
         collectAssignmentName(assignment);
         MainActivity.adapter.notifyItemChanged(position);
+        emptyAssignments.setText("");
 
         addAssignments.setVisibility(View.GONE);
         addAssignmentsText.setVisibility(View.GONE);
@@ -132,6 +142,7 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         ExamModel exam = new ExamModel();
         collectExamName(exam);
         MainActivity.adapter.notifyItemChanged(position);
+        emptyExams.setText("");
 
         addAssignments.setVisibility(View.GONE);
         addAssignmentsText.setVisibility(View.GONE);
@@ -287,19 +298,31 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
 
 
     @Override
-    public void onItemLongClick(int position) {
+    public void onItemLongClick(String model, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle("Delete?");
-        builder.setMessage(String.format("Are you sure you want to delete %s?", assignmentModels.get(position).getName()));
+        if (model.equals("ASSIGNMENT")) {
+            builder.setMessage(String.format("Are you sure you want to delete %s?", assignmentModels.get(position).getName()));
+        } else if (model.equals("EXAM")) {
+            builder.setMessage(String.format("Are you sure you want to delete %s?", examModels.get(position).getName()));
+        }
         builder.setPositiveButton("Confirm",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        assignmentModels.remove(position);
-                        assignmentsAdapter.notifyItemRemoved(position);
-                        if (assignmentModels.isEmpty()) {
-                            // addClasses.setText(R.string.no_classes_yet);
+                        if (model.equals("ASSIGNMENT")) {
+                            assignmentModels.remove(position);
+                            assignmentsAdapter.notifyItemRemoved(position);
+                            if (assignmentModels.isEmpty()) {
+                                emptyAssignments.setText(R.string.no_classes_yet);
+                            }
+                        } else if (model.equals("EXAM")) {
+                            examModels.remove(position);
+                            examsAdapter.notifyItemRemoved(position);
+                            if (examModels.isEmpty()) {
+                                emptyExams.setText(R.string.no_classes_yet);
+                            }
                         }
                     }
                 });

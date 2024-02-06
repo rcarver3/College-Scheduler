@@ -8,6 +8,7 @@ public class ClassModel {
     String className;
     String classDay;
     String classTime;
+    String instructor;
     ArrayList<AssignmentModel> assignments;
     ArrayList<ExamModel> exams;
     public void setClassName(String className) {
@@ -25,16 +26,17 @@ public class ClassModel {
     public void setExams(ArrayList<ExamModel> exams) {this.exams = exams;}
 
     public ClassModel(String className, String classDay,
-                      String classTime) {
+                      String classTime, String instructor) {
         this.className = className;
         this.classDay = classDay;
         this.classTime = classTime;
+        this.instructor = instructor;
         this.assignments = new ArrayList<>();
         this.exams = new ArrayList<>();
     }
 
     public ClassModel() {
-        this(null, null, null);
+        this(null, null, null, null);
     }
 
     public String getClassName() {
@@ -56,5 +58,13 @@ public class ClassModel {
 
     public ArrayList<ExamModel> getExams() {
         return exams;
+    }
+
+    public String getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
     }
 }

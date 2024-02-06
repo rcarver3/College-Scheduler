@@ -83,7 +83,7 @@ public class Class_RecyclerViewAdapter extends RecyclerView.Adapter<Class_Recycl
                         int pos = getAdapterPosition();
 
                         if (pos != RecyclerView.NO_POSITION) {
-                            recyclerViewInterface.onItemLongClick(pos);
+                            recyclerViewInterface.onItemLongClick("CLASS", pos);
                         }
                     }
                     return true;
