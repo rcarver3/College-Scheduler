@@ -265,8 +265,8 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
     private void collectExamDate(ExamModel model) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Add Assignment");
-        alert.setMessage("Due Time:");
+        alert.setTitle("Add Exam");
+        alert.setMessage("Exam Date:");
 
 // Set an EditText view to get user input
         final EditText input = new EditText(this);
@@ -275,6 +275,33 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 model.setDate(input.getText().toString());
+                collectExamLoc(model);
+                // Do something with value!
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+    }
+
+    private void collectExamLoc(ExamModel model) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Add Exam");
+        alert.setMessage("Exam Location:");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                model.setLoc(input.getText().toString());
                 examModels.add(0, model);
                 examsAdapter.notifyItemInserted(0);
                 classModels.get(position).setExams(examModels);

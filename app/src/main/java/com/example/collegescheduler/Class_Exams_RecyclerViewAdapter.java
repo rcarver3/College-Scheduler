@@ -37,6 +37,7 @@ public class Class_Exams_RecyclerViewAdapter extends RecyclerView.Adapter<Class_
     public void onBindViewHolder(@NonNull Class_Exams_RecyclerViewAdapter.MyViewHolder holder, int position) {
         holder.tvName.setText(examModels.get(position).getName());
         holder.tvDay.setText(examModels.get(position).getDate());
+        holder.tvLoc.setText(examModels.get(position).getLoc());
     }
 
     @Override
@@ -46,12 +47,13 @@ public class Class_Exams_RecyclerViewAdapter extends RecyclerView.Adapter<Class_
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvName, tvDay;
+        TextView tvName, tvDay, tvLoc;
         public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
             tvName = itemView.findViewById(R.id.class_name);
             tvDay = itemView.findViewById(R.id.class_day);
+            tvLoc = itemView.findViewById(R.id.location);
 
             itemView.setOnClickListener(v -> {
                 if (recyclerViewInterface != null) {
