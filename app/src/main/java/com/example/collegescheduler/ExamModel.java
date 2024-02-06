@@ -3,14 +3,16 @@ package com.example.collegescheduler;
 public class ExamModel {
     String name;
     String date;
+    String loc;
 
-    public ExamModel(String name, String date) {
+    public ExamModel(String name, String date, String loc) {
         this.name = name;
         this.date = date;
+        this.loc = loc;
     }
 
     public ExamModel() {
-        this(null, null);
+        this(null, null, null);
     }
     public String getName() {
         return name;
@@ -26,5 +28,13 @@ public class ExamModel {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getLoc() {
+        return loc;
+    }
+
+    public void setLoc(String loc) {
+        this.loc = loc;
     }
 }
