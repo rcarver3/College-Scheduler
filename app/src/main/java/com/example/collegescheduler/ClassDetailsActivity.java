@@ -1,3 +1,4 @@
+
 package com.example.collegescheduler;
 
 import androidx.appcompat.app.AlertDialog;
@@ -262,7 +263,6 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
     }
 
     private void collectExamDate(ExamModel model) {
-
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -282,32 +282,6 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
                         classModels.get(position).setExams(examModels);
                     }
                 }, year, month, day);
-
-    private void collectExamLoc(ExamModel model) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-        alert.setTitle("Add Exam");
-        alert.setMessage("Exam Location:");
-
-// Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                model.setLoc(input.getText().toString());
-                examModels.add(0, model);
-                examsAdapter.notifyItemInserted(0);
-                classModels.get(position).setExams(examModels);
-                // Do something with value!
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
 
         datePickerDialog.setTitle("Select Exam Date");
         datePickerDialog.show();
