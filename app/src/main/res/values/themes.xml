@@ -21,6 +21,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="CustomCalendarView" parent="Theme.AppCompat.Light">
+        <!-- Customize color attributes as needed -->
+        <item name="android:theme">@drawable/side_nav_bar</item>
+    </style>
+
     <style name="GradientFabRed" parent="Widget.AppCompat.ImageButton">
         <item name="android:background">@drawable/side_nav_bar_button</item>
     </style>
