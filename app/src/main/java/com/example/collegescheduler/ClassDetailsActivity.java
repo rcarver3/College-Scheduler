@@ -55,8 +55,8 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
 
         emptyAssignments = findViewById(R.id.empty_assignments);
         emptyExams = findViewById(R.id.empty_exams);
-        instructor = findViewById(R.id.instructor);
 
+        instructor = findViewById(R.id.instructor);
         Toolbar toolbar = findViewById(R.id.appbar_main);
         setSupportActionBar(toolbar);
         setTitle("");
@@ -97,6 +97,12 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         assignmentModels = MainActivity.classModels.get(position).getAssignments();
         examModels = MainActivity.classModels.get(position).getExams();
 
+        if (!assignmentModels.isEmpty()) {
+            emptyAssignments.setText("");
+        }
+        if (!examModels.isEmpty()) {
+            emptyExams.setText("");
+        }
         textView0.setText(className);
         textView1.setText(classDay);
         textView2.setText(classTime);

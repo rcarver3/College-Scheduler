@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         setTitle("");
 
         addClasses = findViewById(R.id.empty_classes);
+        if (!classModels.isEmpty()) {
+            addClasses.setText("");
+        }
 
         addBtn = findViewById(R.id.add_btn);
         addBtn.setOnClickListener(new View.OnClickListener() {
