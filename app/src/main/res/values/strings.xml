@@ -6,6 +6,7 @@
     <string name="nav_header_subtitle">Keep track of your school life easily!</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="to_do_list_title">To Do List</string>
 
     <string name="menu_classes">Classes</string>
     <string name="menu_assignments">Assignments</string>
@@ -98,4 +99,6 @@
     <string name="title_activity_to_do_fr">ToDoFr</string>
     <string name="title_activity_to_do_frr">ToDoFrr</string>
     <string name="title_activity_main2">MainActivity2</string>
+    <string name="home">Home</string>
+    <string name="classes">Classes</string>
 </resources>
