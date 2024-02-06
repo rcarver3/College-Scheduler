@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.content.Context;
+import androidx.appcompat.app.AlertDialog;
+import android.content.DialogInterface;
 
 public class ToDoListFr extends AppCompatActivity {
     private ArrayList<String> items;
@@ -41,6 +43,13 @@ public class ToDoListFr extends AppCompatActivity {
                 return remove(position);
             }
         });
+
+        taskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                editItem(position);
+            }
+        });
     }
 
     private boolean remove(int position) {
@@ -62,6 +71,37 @@ public class ToDoListFr extends AppCompatActivity {
         else {
             Toast.makeText(getApplicationContext(), "Please enter task..", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void editItem(int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Edit Item");
+
+        final EditText input = new EditText(this);
+        input.setText(items.get(position));
+        builder.setView(input);
+
+        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String itemText = input.getText().toString();
+                if (!itemText.equals("")) {
+                    items.set(position, itemText);
+                    itemsAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Task cannot be empty.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
 }
