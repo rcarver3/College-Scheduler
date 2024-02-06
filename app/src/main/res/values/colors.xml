@@ -12,4 +12,5 @@
     <color name="cream">#F9F5E0</color>
     <color name="text_color">#FFF0DDCA</color>
     <color name="bg_color_card">#0E1D23</color>
+    <color name="transparent">#00000000</color>
 </resources>
