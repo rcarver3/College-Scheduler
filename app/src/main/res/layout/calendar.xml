@@ -50,12 +50,38 @@
 
         <View
             android:id="@+id/customOverlay"
-            android:layout_width="410dp"
-            android:layout_height="458dp"
+            android:layout_width="400dp"
+            android:layout_height="396dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.538"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar4"
+            android:layout_width="408dp"
+            android:layout_height="61dp"
+            android:background="@drawable/side_nav_bar"
+            android:gravity="bottom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+            app:layout_constraintTop_toBottomOf="@+id/customOverlay"
+            app:layout_constraintVertical_bias="1.0"
+            app:popupTheme="@style/Theme.CollegeScheduler.PopupOverlay" />
+
+        <Button
+            android:id="@+id/toDoPageBtn3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_button"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customOverlay"
+            app:layout_constraintVertical_bias="0.551" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
