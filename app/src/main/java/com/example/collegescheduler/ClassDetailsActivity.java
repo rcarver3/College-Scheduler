@@ -276,15 +276,41 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
                         // Format the date selected by the user
                         String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
                         model.setDate(selectedDate);
+                        collectExamLoc(model);
                         // Here, you can proceed to the next step, if there is any, or update your model and UI
-                        examModels.add(0, model);
-                        examsAdapter.notifyItemInserted(0);
-                        classModels.get(position).setExams(examModels);
                     }
                 }, year, month, day);
 
         datePickerDialog.setTitle("Select Exam Date");
         datePickerDialog.show();
+    }
+
+    private void collectExamLoc(ExamModel model) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Add Exam");
+        alert.setMessage("Exam Location:");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                model.setLoc(input.getText().toString());
+                examModels.add(0, model);
+                examsAdapter.notifyItemInserted(0);
+                classModels.get(position).setExams(examModels);
+                // Do something with value!
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+        alert.show();
     }
 
     @Override
