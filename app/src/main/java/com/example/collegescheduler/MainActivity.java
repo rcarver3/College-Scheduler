@@ -154,6 +154,33 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 model.setClassTime(input.getText().toString());
+                collectClassInstructor(model);
+                // Do something with value!
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+    }
+
+    private void collectClassInstructor(ClassModel model) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Add Class");
+        alert.setMessage("Class Instructor:");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                model.setInstructor(input.getText().toString());
                 classModels.add(0, model);
                 adapter.notifyItemInserted(0);
                 // Do something with value!
@@ -170,6 +197,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     }
 
 
+
+
     @Override
     public void onItemClick(int position) {
         showClassDetails(position);
@@ -177,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     }
 
     @Override
-    public void onItemLongClick(int position) {
+    public void onItemLongClick(String model, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle("Delete?");
@@ -209,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         intent.putExtra("NAME", classModels.get(position).getClassName());
         intent.putExtra("DAY", classModels.get(position).getClassDay());
         intent.putExtra("TIME", classModels.get(position).getClassTime());
+        intent.putExtra("INSTRUCTOR", classModels.get(position).getInstructor());
         intent.putExtra("POS", position);
 
         startActivity(intent);

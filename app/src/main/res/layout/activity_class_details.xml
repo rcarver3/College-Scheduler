@@ -36,31 +36,22 @@
         app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/assignments_header"
-        app:layout_constraintVertical_bias="0.008" />
+        app:layout_constraintVertical_bias="0.007" />
 
     <TextView
-        android:id="@+id/exams_header"
+        android:id="@+id/empty_exams"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:text="@string/exams_header"
-        android:textColor="@color/text_color"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/assignmentsRecyclerView" />
-
-    <TextView
-        android:id="@+id/assignments_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/assignments_header"
-        android:textColor="@color/text_color"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/class_day" />
+        android:layout_marginTop="47dp"
+        android:layout_marginBottom="57dp"
+        android:text="@string/empty_exams"
+        android:textColor="@color/cream"
+        app:layout_anchorGravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/examsRecyclerView"
+        app:layout_constraintEnd_toEndOf="@+id/examsRecyclerView"
+        app:layout_constraintStart_toStartOf="@+id/examsRecyclerView"
+        app:layout_constraintTop_toTopOf="@+id/examsRecyclerView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/examsRecyclerView"
@@ -71,7 +62,31 @@
         app:layout_constraintHorizontal_bias="0.346"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exams_header"
-        app:layout_constraintVertical_bias="0.04" />
+        app:layout_constraintVertical_bias="0.051" />
+
+    <TextView
+        android:id="@+id/assignments_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/assignments_header"
+        android:textColor="@color/text_color"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/class_day" />
+
+    <TextView
+        android:id="@+id/exams_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/exams_header"
+        android:textColor="@color/text_color"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assignmentsRecyclerView" />
 
     <TextView
         android:id="@+id/class_name"
@@ -169,6 +184,19 @@
          to the add Person FAB button-->
 
     <TextView
+        android:id="@+id/empty_assignments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="137dp"
+        android:text="@string/empty_assignments"
+        android:textColor="@color/cream"
+        app:layout_anchorGravity="center"
+        app:layout_constraintEnd_toEndOf="@+id/assignmentsRecyclerView"
+        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintStart_toStartOf="@+id/assignmentsRecyclerView"
+        app:layout_constraintTop_toTopOf="@+id/assignmentsRecyclerView" />
+
+    <TextView
         android:id="@+id/add_exam_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -200,5 +228,17 @@
         android:textColor="@color/cream"
         app:layout_constraintBottom_toTopOf="@+id/add_assignments"
         app:layout_constraintEnd_toStartOf="@+id/add_exam_text" />
+
+    <TextView
+        android:id="@+id/instructor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:text="TextView"
+        android:textColor="@color/cream"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/class_day" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
