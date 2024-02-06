@@ -1,5 +1,6 @@
 package com.example.collegescheduler;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +19,8 @@ public class ToDoListFr extends AppCompatActivity {
     private ArrayList<String> items;
     private ListView taskList;
     private Button addTaskBtn;
+
+    Button homeBtn;
     private ArrayAdapter<String> itemsAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,15 @@ public class ToDoListFr extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 editItem(position);
+            }
+        });
+
+        homeBtn = findViewById(R.id.toDoPageBtn2);
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ToDoListFr.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
