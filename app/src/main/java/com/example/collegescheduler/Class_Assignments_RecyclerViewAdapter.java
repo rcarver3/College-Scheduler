@@ -81,4 +81,7 @@ public class Class_Assignments_RecyclerViewAdapter extends RecyclerView.Adapter<
             });
         }
     }
+    public ArrayList<AssignmentModel> getAssignmentModels(){
+        return assignmentModels;
+    }
 }

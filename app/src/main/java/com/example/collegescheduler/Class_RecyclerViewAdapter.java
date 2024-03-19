@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Class_RecyclerViewAdapter extends RecyclerView.Adapter<Class_RecyclerViewAdapter.MyViewHolder> {
     Context context;
-    ArrayList<ClassModel> classModels = MainActivity.classModels;
+    public ArrayList<ClassModel> classModels = MainActivity.classModels;
 
     private final RecyclerViewInterface recyclerViewInterface;
 
