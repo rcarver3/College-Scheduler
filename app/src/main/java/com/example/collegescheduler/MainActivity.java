@@ -210,6 +210,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     }
 
 
+    public static ArrayList<ClassModel> getClassModels() {
+        return classModels;
+    }
 
 
     @Override

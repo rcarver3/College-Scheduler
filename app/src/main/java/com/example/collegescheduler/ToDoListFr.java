@@ -17,6 +17,8 @@ import android.content.DialogInterface;
 
 public class ToDoListFr extends AppCompatActivity {
     private ArrayList<String> items;
+
+    private ArrayList<ClassModel> classes;
     private ListView taskList;
     private Button addTaskBtn;
 
@@ -37,6 +39,7 @@ public class ToDoListFr extends AppCompatActivity {
             }
         });
 
+        classes = MainActivity.getClassModels();
         items = new ArrayList<>();
         itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         taskList.setAdapter(itemsAdapter);
