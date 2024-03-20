@@ -46,7 +46,7 @@ public class ToDoListFr extends AppCompatActivity {
             items.addAll(classModel.getAssignments());
             items.addAll(classModel.getExams());
         }
-        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, items);
+        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         taskList.setAdapter(itemsAdapter);
         taskList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
