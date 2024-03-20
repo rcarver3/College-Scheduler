@@ -16,14 +16,14 @@ import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
 
 public class ToDoListFr extends AppCompatActivity {
-    private ArrayList<String> items;
+    private ArrayList<Object> items;
 
     private ArrayList<ClassModel> classes;
     private ListView taskList;
     private Button addTaskBtn;
 
     Button homeBtn;
-    private ArrayAdapter<String> itemsAdapter;
+    private ArrayAdapter<Object> itemsAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +35,18 @@ public class ToDoListFr extends AppCompatActivity {
         addTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                additem(view);
+                addItem(view);
             }
         });
 
         classes = MainActivity.getClassModels();
         items = new ArrayList<>();
-        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+        for (int i = 0; i < classes.size(); i++) {
+            ClassModel classModel = classes.get(i);
+            items.addAll(classModel.getAssignments());
+            items.addAll(classModel.getExams());
+        }
+        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, items);
         taskList.setAdapter(itemsAdapter);
         taskList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -74,7 +79,7 @@ public class ToDoListFr extends AppCompatActivity {
         itemsAdapter.notifyDataSetChanged();
         return true;
     }
-    private void additem(View view) {
+    private void addItem(View view) {
         EditText input = findViewById(R.id.edit_text);
         String itemText = input.getText().toString();
 
@@ -93,7 +98,7 @@ public class ToDoListFr extends AppCompatActivity {
         builder.setTitle("Edit Item");
 
         final EditText input = new EditText(this);
-        input.setText(items.get(position));
+        input.setText(items.get(position).toString());
         builder.setView(input);
 
         builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
