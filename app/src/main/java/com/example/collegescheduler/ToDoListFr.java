@@ -5,39 +5,73 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
 import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
 
-public class ToDoListFr extends AppCompatActivity {
+public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterface{
     private ArrayList<Object> items;
 
+    Context context;
+
+    Boolean isAllButtonsVisible;
+
+    ArrayList<AssignmentModel> assignmentModels;
+    ArrayList<ExamModel> examModels;
     private ArrayList<ClassModel> classes;
+
+    TextView emptyAssignments;
+    TextView emptyExams;
+    ImageButton addInfo;
+
+    int position;
+
+    TextView addExamText;
+    ImageButton addAssignments;
+    TextView addAssignmentsText;
     private ListView taskList;
     private Button addTaskBtn;
 
+    Class_Assignments_RecyclerViewAdapter assignmentsAdapter;
+
+    Class_Exams_RecyclerViewAdapter examsAdapter;
+
     Button homeBtn;
-    private ArrayAdapter<Object> itemsAdapter;
+    private ListTaskAdapter itemsAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.todolistfr);
 
-        taskList = findViewById(R.id.taskList);
-        addTaskBtn = findViewById(R.id.addTaskBtn);
+        position = getIntent().getIntExtra("POS", 0);
+        addInfo = findViewById(R.id.more_actions2);
+        addExamText = findViewById(R.id.add_exam_text3);
+        addAssignments = findViewById(R.id.add_assignments3);
+        addAssignmentsText = findViewById(R.id.add_assignment_text3);
 
+        isAllButtonsVisible = false;
+
+        emptyAssignments = findViewById(R.id.empty_todo);
+
+        taskList = findViewById(R.id.assignmentsRecyclerView);
+
+        /*
         addTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addItem(view);
             }
         });
+
+         */
 
         classes = MainActivity.getClassModels();
         items = new ArrayList<>();
@@ -46,7 +80,9 @@ public class ToDoListFr extends AppCompatActivity {
             items.addAll(classModel.getAssignments());
             items.addAll(classModel.getExams());
         }
-        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+
+        /*
+        itemsAdapter = new ListTaskAdapter(this, items);
         taskList.setAdapter(itemsAdapter);
         taskList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -70,6 +106,8 @@ public class ToDoListFr extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+         */
     }
 
     private boolean remove(int position) {
@@ -79,12 +117,14 @@ public class ToDoListFr extends AppCompatActivity {
         itemsAdapter.notifyDataSetChanged();
         return true;
     }
+
+    /*
     private void addItem(View view) {
         EditText input = findViewById(R.id.edit_text);
         String itemText = input.getText().toString();
 
         if (!(itemText.equals(""))){
-            itemsAdapter.add(itemText);
+            ;
             input.setText("");
         }
 
@@ -92,6 +132,7 @@ public class ToDoListFr extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please enter task..", Toast.LENGTH_SHORT).show();
         }
     }
+     */
 
     private void editItem(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -124,4 +165,48 @@ public class ToDoListFr extends AppCompatActivity {
         builder.show();
     }
 
+    @Override
+    public void onItemClick(int position) {
+
+
+    }
+
+    @Override
+    public void onItemLongClick(String model, int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle("Delete?");
+        if (model.equals("ASSIGNMENT")) {
+            builder.setMessage(String.format("Are you sure you want to delete %s?", assignmentModels.get(position).getName()));
+        } else if (model.equals("EXAM")) {
+            builder.setMessage(String.format("Are you sure you want to delete %s?", examModels.get(position).getName()));
+        }
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (model.equals("ASSIGNMENT")) {
+                            assignmentModels.remove(position);
+                            assignmentsAdapter.notifyItemRemoved(position);
+                            if (assignmentModels.isEmpty()) {
+                                emptyAssignments.setText(R.string.no_classes_yet);
+                            }
+                        } else if (model.equals("EXAM")) {
+                            examModels.remove(position);
+                            examsAdapter.notifyItemRemoved(position);
+                            if (examModels.isEmpty()) {
+                                emptyExams.setText(R.string.no_classes_yet);
+                            }
+                        }
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
