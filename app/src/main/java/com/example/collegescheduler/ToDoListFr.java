@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterface{
-    private ArrayList<Object> items;
+    private ArrayList<ToDoListInterface> tasks;
 
     Context context;
 
@@ -48,8 +48,6 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
     TextView addExamText;
     ImageButton addAssignments;
     TextView addAssignmentsText;
-    private RecyclerView taskList;
-    private Button addTaskBtn;
 
 
     Class_Assignments_RecyclerViewAdapter assignmentsAdapter;
@@ -80,6 +78,12 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         addAssignments.setVisibility(View.GONE);
         addExamText.setVisibility(View.GONE);
         addAssignmentsText.setVisibility(View.GONE);
+
+        RecyclerView tasksRecyclerView = findViewById(R.id.assignmentsRecyclerView3);
+
+        taskAdapter = new ListTaskAdapter(context, tasks, this);
+        tasksRecyclerView.setAdapter(taskAdapter);
+        tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         addInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +157,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
     private void addAssignment() {
         AssignmentModel assignment = new AssignmentModel();
         collectAssignmentName(assignment);
-        // MainActivity.adapter.notifyItemChanged(position);
+        MainActivity.adapter.notifyItemChanged(position);
         emptyAssignments.setText("");
 
         addAssignments.setVisibility(View.GONE);
@@ -166,7 +170,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
     private void addExam() {
         ExamModel exam = new ExamModel();
         collectExamName(exam);
-        // MainActivity.adapter.notifyItemChanged(position);
+        MainActivity.adapter.notifyItemChanged(position);
         emptyExams.setText("");
 
         addAssignments.setVisibility(View.GONE);
@@ -240,6 +244,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
             public void onClick(DialogInterface dialog, int whichButton) {
                 model.setDueTime(input.getText().toString());
                 assignmentModels.add(assignmentModels.size() - 1, model);
+                tasks.add(tasks.size() - 1, model);
                 taskAdapter.notifyItemInserted(0);
                 // Do something with value!
             }
@@ -348,7 +353,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
     private boolean remove(int position) {
         Context context = getApplicationContext();
         Toast.makeText(context, "", Toast.LENGTH_LONG).show();
-        items.remove(position);
+        tasks.remove(position);
         taskAdapter.notifyDataSetChanged();
         return true;
     }
