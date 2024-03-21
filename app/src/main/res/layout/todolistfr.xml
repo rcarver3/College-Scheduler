@@ -44,10 +44,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/assignmentsRecyclerView3"
-            android:layout_width="405dp"
-            android:layout_height="636dp"
-            android:layout_marginBottom="2dp"
-            app:layout_constraintBottom_toTopOf="@+id/add_assignment_text3"
+            android:layout_width="402dp"
+            android:layout_height="584dp"
+            app:layout_constraintBottom_toTopOf="@+id/toolbar3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"

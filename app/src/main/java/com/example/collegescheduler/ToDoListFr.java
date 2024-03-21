@@ -81,6 +81,12 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
 
         RecyclerView tasksRecyclerView = findViewById(R.id.assignmentsRecyclerView3);
 
+        tasks = new ArrayList<ToDoListInterface>();
+        for (ClassModel classModel : classModels) {
+            tasks.addAll(classModel.getExams());
+            tasks.addAll(classModel.getAssignments());
+        }
+
         taskAdapter = new ListTaskAdapter(context, tasks, this);
         tasksRecyclerView.setAdapter(taskAdapter);
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -243,8 +249,8 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 model.setDueTime(input.getText().toString());
-                assignmentModels.add(assignmentModels.size() - 1, model);
-                tasks.add(tasks.size() - 1, model);
+                assignmentModels.add(0, model);
+                tasks.add(0, model);
                 taskAdapter.notifyItemInserted(0);
                 // Do something with value!
             }
@@ -323,8 +329,8 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
             public void onClick(DialogInterface dialog, int whichButton) {
                 model.setLoc(input.getText().toString());
                 examModels.add(0, model);
-                examsAdapter.notifyItemInserted(0);
-                classModels.get(position).setExams(examModels);
+                tasks.add(0, model);
+                taskAdapter.notifyItemInserted(0);
                 // Do something with value!
             }
         });

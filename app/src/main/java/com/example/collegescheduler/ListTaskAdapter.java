@@ -98,7 +98,7 @@ public class ListTaskAdapter  extends RecyclerView.Adapter<ListTaskAdapter.MyVie
 
     @Override
     public int getItemCount() {
-        return 0;
+        return tasks.size();
     }
 
 
