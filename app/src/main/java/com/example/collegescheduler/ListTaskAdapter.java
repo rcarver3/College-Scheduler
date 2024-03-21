@@ -28,10 +28,6 @@ public class ListTaskAdapter  extends RecyclerView.Adapter<ListTaskAdapter.MyVie
         return tasks.size();
     }
 
-    public Object getItem(int position) {
-        return null;
-    }
-
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
