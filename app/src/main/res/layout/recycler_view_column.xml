@@ -25,7 +25,7 @@
             android:background="@drawable/side_nav_bar">
 
             <TextView
-                android:id="@+id/class_day"
+                android:id="@+id/dueDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -33,13 +33,13 @@
                 android:text="@string/test_day"
                 android:textColor="@color/text_color"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/class_time"
+                app:layout_constraintEnd_toStartOf="@+id/dueTime"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/class_name"
+                android:id="@+id/taskName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -49,17 +49,17 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/class_day" />
+                app:layout_constraintTop_toBottomOf="@+id/dueDate" />
 
             <TextView
-                android:id="@+id/class_time"
+                android:id="@+id/dueTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="176dp"
                 android:text="@string/test_time"
                 android:textColor="@color/text_color"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/class_name"
+                app:layout_constraintBottom_toTopOf="@+id/taskName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.75" />

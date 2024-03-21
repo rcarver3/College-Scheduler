@@ -20,6 +20,8 @@ import android.widget.Toast;
 import android.content.Context;
 import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterface{
     private ArrayList<Object> items;
@@ -327,6 +329,19 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         });
         alert.show();
     }
+
+    private ArrayList<ToDoListInterface> getSortedTodoItems() {
+        ArrayList<ToDoListInterface> items = new ArrayList<>();
+        // Assuming classModels is accessible and contains your data
+        for (ClassModel classModel : classModels) {
+            items.addAll(classModel.getAssignments()); // Ensure these lists actually hold TodoItemInterface objects
+            items.addAll(classModel.getExams());
+        }
+        // Sort items by due date; implement actual date comparison for real applications
+        items.sort(Comparator.comparing(ToDoListInterface::getDueDate));
+        return items;
+    }
+
 
     private boolean remove(int position) {
         Context context = getApplicationContext();

@@ -1,6 +1,6 @@
 package com.example.collegescheduler;
 
-public class ExamModel {
+public class ExamModel implements ToDoListInterface {
     String name;
     String date;
     String loc;
@@ -21,6 +21,8 @@ public class ExamModel {
     public String getDate() {
         return date;
     }
+
+    public String getDueDate() {return date;}
 
     public void setName(String name) {
         this.name = name;
