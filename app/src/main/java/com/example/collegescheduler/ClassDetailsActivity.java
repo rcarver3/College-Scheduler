@@ -343,13 +343,13 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
                             assignmentModels.remove(position);
                             assignmentsAdapter.notifyItemRemoved(position);
                             if (assignmentModels.isEmpty()) {
-                                emptyAssignments.setText(R.string.no_classes_yet);
+                                emptyAssignments.setText(R.string.empty_todo);
                             }
                         } else if (model.equals("EXAM")) {
                             examModels.remove(position);
                             examsAdapter.notifyItemRemoved(position);
                             if (examModels.isEmpty()) {
-                                emptyExams.setText(R.string.no_classes_yet);
+                                emptyExams.setText(R.string.empty_todo);
                             }
                         }
                     }

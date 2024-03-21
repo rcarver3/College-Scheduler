@@ -1,14 +1,18 @@
 package com.example.collegescheduler;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,6 +25,8 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
     private ArrayList<Object> items;
 
     Context context;
+
+    ArrayList<ClassModel> classModels = MainActivity.classModels;
 
     Boolean isAllButtonsVisible;
 
@@ -37,7 +43,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
     TextView addExamText;
     ImageButton addAssignments;
     TextView addAssignmentsText;
-    private ListView taskList;
+    private  ArrayList<Object> taskList;
     private Button addTaskBtn;
 
     Class_Assignments_RecyclerViewAdapter assignmentsAdapter;
@@ -50,6 +56,8 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.todolistfr);
+        context = this;
+
 
         position = getIntent().getIntExtra("POS", 0);
         addInfo = findViewById(R.id.more_actions2);
@@ -57,11 +65,39 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         addAssignments = findViewById(R.id.add_assignments3);
         addAssignmentsText = findViewById(R.id.add_assignment_text3);
 
+
         isAllButtonsVisible = false;
 
         emptyAssignments = findViewById(R.id.empty_todo);
 
-        taskList = findViewById(R.id.assignmentsRecyclerView);
+        //taskList = findViewById(R.id.assignmentsRecyclerView3);
+
+        addAssignments.setVisibility(View.GONE);
+        addExamText.setVisibility(View.GONE);
+        addAssignmentsText.setVisibility(View.GONE);
+
+        addInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isAllButtonsVisible) {
+                    expandButtons();
+                } else {
+                    addExam();
+                }
+            }
+        });
+
+        addAssignments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isAllButtonsVisible) {
+                    addAssignment();
+                }
+            }
+        });
+
+
+
 
         /*
         addTaskBtn.setOnClickListener(new View.OnClickListener() {
@@ -72,14 +108,6 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         });
 
          */
-
-        classes = MainActivity.getClassModels();
-        items = new ArrayList<>();
-        for (int i = 0; i < classes.size(); i++) {
-            ClassModel classModel = classes.get(i);
-            items.addAll(classModel.getAssignments());
-            items.addAll(classModel.getExams());
-        }
 
         /*
         itemsAdapter = new ListTaskAdapter(this, items);
@@ -97,6 +125,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
                 editItem(position);
             }
         });
+         */
 
         homeBtn = findViewById(R.id.toDoPageBtn2);
         homeBtn.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +136,196 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
             }
         });
 
-         */
+    }
+
+    private void expandButtons() {
+        addAssignments.setVisibility(View.VISIBLE);
+        addAssignmentsText.setVisibility(View.VISIBLE);
+        addExamText.setVisibility(View.VISIBLE);
+
+        isAllButtonsVisible = true;
+    }
+    private void addAssignment() {
+        AssignmentModel assignment = new AssignmentModel();
+        collectAssignmentName(assignment);
+        MainActivity.adapter.notifyItemChanged(position);
+        emptyAssignments.setText("");
+
+        addAssignments.setVisibility(View.GONE);
+        addAssignmentsText.setVisibility(View.GONE);
+        addExamText.setVisibility(View.GONE);
+
+        isAllButtonsVisible = false;
+    }
+
+    private void addExam() {
+        ExamModel exam = new ExamModel();
+        collectExamName(exam);
+        MainActivity.adapter.notifyItemChanged(position);
+        emptyExams.setText("");
+
+        addAssignments.setVisibility(View.GONE);
+        addAssignmentsText.setVisibility(View.GONE);
+        addExamText.setVisibility(View.GONE);
+
+        isAllButtonsVisible = false;
+
+    }
+
+    private void collectAssignmentName(AssignmentModel model) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Add Assignment");
+        alert.setMessage("Assignment Name:");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                model.setName(input.getText().toString());
+                collectDueDate(model);
+                // Do something with value!
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+    }
+
+    private void collectDueDate(AssignmentModel model) {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        // Format the date selected by the user
+                        String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        model.setDueDate(selectedDate);
+                        collectDueTime(model); // Proceed to collect due time
+                    }
+                }, year, month, day);
+
+        datePickerDialog.setTitle("Select Due Date");
+        datePickerDialog.show();
+    }
+
+    private void collectDueTime(AssignmentModel model) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Add Assignment");
+        alert.setMessage("Due Time:");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                model.setDueTime(input.getText().toString());
+                assignmentModels.add(0, model);
+                assignmentsAdapter.notifyItemInserted(0);
+                classModels.get(position).setAssignments(assignmentModels);
+                // Do something with value!
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+    }
+
+    private void collectExamName(ExamModel model) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Add Exam");
+        alert.setMessage("Exam Name:");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                model.setName(input.getText().toString());
+                collectExamDate(model);
+                // Do something with value!
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+    }
+
+    private void collectExamDate(ExamModel model) {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        // Format the date selected by the user
+                        String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        model.setDate(selectedDate);
+                        collectExamLoc(model);
+                        // Here, you can proceed to the next step, if there is any, or update your model and UI
+                    }
+                }, year, month, day);
+
+        datePickerDialog.setTitle("Select Exam Date");
+        datePickerDialog.show();
+    }
+
+    private void collectExamLoc(ExamModel model) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Add Exam");
+        alert.setMessage("Exam Location:");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                model.setLoc(input.getText().toString());
+                examModels.add(0, model);
+                examsAdapter.notifyItemInserted(0);
+                classModels.get(position).setExams(examModels);
+                // Do something with value!
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+        alert.show();
     }
 
     private boolean remove(int position) {
@@ -134,6 +352,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
     }
      */
 
+    /*
     private void editItem(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit Item");
@@ -141,6 +360,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         final EditText input = new EditText(this);
         input.setText(items.get(position).toString());
         builder.setView(input);
+
 
         builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
             @Override
@@ -164,6 +384,8 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
 
         builder.show();
     }
+
+     */
 
     @Override
     public void onItemClick(int position) {
