@@ -24,6 +24,10 @@ public class ExamModel implements ToDoListInterface {
 
     public String getDueDate() {return date;}
 
+    public String getDueTime() {
+        return "";
+    }
+
     public void setName(String name) {
         this.name = name;
     }

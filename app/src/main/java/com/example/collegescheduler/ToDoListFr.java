@@ -57,7 +57,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
     Class_Exams_RecyclerViewAdapter examsAdapter;
 
     Button homeBtn;
-    private ListTaskAdapter itemsAdapter;
+    private ListTaskAdapter taskAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -240,7 +240,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
             public void onClick(DialogInterface dialog, int whichButton) {
                 model.setDueTime(input.getText().toString());
                 assignmentModels.add(assignmentModels.size() - 1, model);
-                assignmentsAdapter.notifyItemInserted(0);
+                taskAdapter.notifyItemInserted(0);
                 // Do something with value!
             }
         });
@@ -349,7 +349,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         Context context = getApplicationContext();
         Toast.makeText(context, "", Toast.LENGTH_LONG).show();
         items.remove(position);
-        itemsAdapter.notifyDataSetChanged();
+        taskAdapter.notifyDataSetChanged();
         return true;
     }
 

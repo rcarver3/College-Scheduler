@@ -14,14 +14,14 @@ import java.util.ArrayList;
 
 public class ListTaskAdapter  extends RecyclerView.Adapter<ListTaskAdapter.MyViewHolder> {
     Context ctx;
-    ArrayList<Object> tasks;
-    LayoutInflater inflater;
+    ArrayList<ToDoListInterface> tasks;
+    private final RecyclerViewInterface recyclerViewInterface;
 
 
-    public ListTaskAdapter(Context ctx, ArrayList<Object> tasks) {
+    public ListTaskAdapter(Context ctx, ArrayList<ToDoListInterface> tasks,RecyclerViewInterface recyclerViewInterface) {
         this.ctx = ctx;
         this.tasks = tasks;
-        inflater = LayoutInflater.from(ctx);
+        this.recyclerViewInterface = recyclerViewInterface;
     }
 
     public int getCount() {
@@ -35,13 +35,14 @@ public class ListTaskAdapter  extends RecyclerView.Adapter<ListTaskAdapter.MyVie
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvDueDate, tvDueTime, tvName;
+        TextView tvDueDate, tvDueTime, tvName, tvLocation;
         public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
             tvDueDate = itemView.findViewById(R.id.dueDate);
             tvDueTime = itemView.findViewById(R.id.dueTime);
             tvName = itemView.findViewById(R.id.taskName);
+            tvLocation = itemView.findViewById(R.id.location);
 
             itemView.setOnClickListener(v -> {
                 if (recyclerViewInterface != null) {
@@ -71,14 +72,22 @@ public class ListTaskAdapter  extends RecyclerView.Adapter<ListTaskAdapter.MyVie
 
     @NonNull
     @Override
-   public ListTaskAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+   public ListTaskAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(ctx);
+        View view  = inflater.inflate(R.layout.recycler_view_column, parent, false);
 
-        return ;
+        return new MyViewHolder(view, recyclerViewInterface);
+
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull ListTaskAdapter.MyViewHolder holder, int position) {
+        ToDoListInterface task = tasks.get(position);
+        holder.tvName.setText(task.getName());
+        holder.tvDueDate.setText(task.getDueDate());
+        holder.tvDueTime.setText(task.getDueTime());
+        holder.tvLocation.setText(task.getLocation());
     }
 
 

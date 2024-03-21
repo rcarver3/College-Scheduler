@@ -28,6 +28,8 @@ public class AssignmentModel implements Serializable, ToDoListInterface {
         return dueTime;
     }
 
+    public String getLocation() {return "";}
+
     public void setName(String name) {
         this.name = name;
     }

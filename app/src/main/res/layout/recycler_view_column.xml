@@ -55,14 +55,28 @@
                 android:id="@+id/dueTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="176dp"
+                android:layout_marginEnd="180dp"
                 android:text="@string/test_time"
                 android:textColor="@color/text_color"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/taskName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.75" />
+                app:layout_constraintVertical_bias="0.666" />
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/test_day"
+                android:textColor="@color/text_color"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/taskName"
+                app:layout_constraintTop_toBottomOf="@+id/dueTime" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
