@@ -2,7 +2,7 @@ package com.example.collegescheduler;
 
 import java.io.Serializable;
 
-public class AssignmentModel implements Serializable {
+public class AssignmentModel implements Serializable, ToDoListInterface {
     String name;
     String dueDate;
     String dueTime;
