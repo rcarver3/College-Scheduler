@@ -19,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
 import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.DialogInterface;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,8 +48,9 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
     TextView addExamText;
     ImageButton addAssignments;
     TextView addAssignmentsText;
-    private  ArrayList<Object> taskList;
+    private RecyclerView taskList;
     private Button addTaskBtn;
+
 
     Class_Assignments_RecyclerViewAdapter assignmentsAdapter;
 
@@ -72,7 +76,6 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
 
         emptyAssignments = findViewById(R.id.empty_todo);
 
-        //taskList = findViewById(R.id.assignmentsRecyclerView3);
 
         addAssignments.setVisibility(View.GONE);
         addExamText.setVisibility(View.GONE);
@@ -99,6 +102,14 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         });
 
 
+        homeBtn = findViewById(R.id.toDoPageBtn2);
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ToDoListFr.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         /*
@@ -129,14 +140,6 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         });
          */
 
-        homeBtn = findViewById(R.id.toDoPageBtn2);
-        homeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ToDoListFr.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 
@@ -150,7 +153,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
     private void addAssignment() {
         AssignmentModel assignment = new AssignmentModel();
         collectAssignmentName(assignment);
-        MainActivity.adapter.notifyItemChanged(position);
+        // MainActivity.adapter.notifyItemChanged(position);
         emptyAssignments.setText("");
 
         addAssignments.setVisibility(View.GONE);
@@ -163,7 +166,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
     private void addExam() {
         ExamModel exam = new ExamModel();
         collectExamName(exam);
-        MainActivity.adapter.notifyItemChanged(position);
+        // MainActivity.adapter.notifyItemChanged(position);
         emptyExams.setText("");
 
         addAssignments.setVisibility(View.GONE);
@@ -236,9 +239,8 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 model.setDueTime(input.getText().toString());
-                assignmentModels.add(0, model);
+                assignmentModels.add(assignmentModels.size() - 1, model);
                 assignmentsAdapter.notifyItemInserted(0);
-                classModels.get(position).setAssignments(assignmentModels);
                 // Do something with value!
             }
         });
@@ -426,13 +428,13 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
                             assignmentModels.remove(position);
                             assignmentsAdapter.notifyItemRemoved(position);
                             if (assignmentModels.isEmpty()) {
-                                emptyAssignments.setText(R.string.no_classes_yet);
+                                emptyAssignments.setText(R.string.empty_todo);
                             }
                         } else if (model.equals("EXAM")) {
                             examModels.remove(position);
                             examsAdapter.notifyItemRemoved(position);
                             if (examModels.isEmpty()) {
-                                emptyExams.setText(R.string.no_classes_yet);
+                                emptyExams.setText(R.string.empty_todo);
                             }
                         }
                     }
