@@ -137,7 +137,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="360dp"
         android:text="@string/empty_todo"
-        android:textColor="@color/black"
         app:layout_anchor="@+id/constraintLayout2"
         app:layout_anchorGravity="center" />
 
