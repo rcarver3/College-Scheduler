@@ -24,18 +24,13 @@ import android.content.DialogInterface;
 import java.util.Comparator;
 
 public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterface{
-    private static ArrayList<ToDoListInterface> tasks = new ArrayList<>();
+    protected static ArrayList<ToDoListInterface> tasks = new ArrayList<>();
 
     Context context;
 
     ArrayList<ClassModel> classModels = MainActivity.classModels;
 
     Boolean isAllButtonsVisible;
-
-    ArrayList<AssignmentModel> assignmentModels;
-    ArrayList<ExamModel> examModels;
-    private ArrayList<ClassModel> classes;
-
     TextView emptyTasks;
     ImageButton addInfo;
 
@@ -47,7 +42,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
 
 
     Button homeBtn;
-    private static ListTaskAdapter taskAdapter;
+    private ListTaskAdapter taskAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

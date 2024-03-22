@@ -36,6 +36,8 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
     TextView emptyAssignments;
     TextView emptyExams;
 
+    ArrayList<ToDoListInterface> tasks;
+
     Class_Assignments_RecyclerViewAdapter assignmentsAdapter;
     Class_Exams_RecyclerViewAdapter examsAdapter;
     int position;
@@ -67,6 +69,8 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         addExamText.setVisibility(View.GONE);
         addAssignmentsText.setVisibility(View.GONE);
 
+        tasks = ToDoListFr.tasks;
+
         addInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +100,9 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
         String classTime = getIntent().getStringExtra("TIME");
         assignmentModels = MainActivity.classModels.get(position).getAssignments();
         examModels = MainActivity.classModels.get(position).getExams();
+
+        assignmentModels.removeIf(assignmentModel -> !tasks.contains(assignmentModel));
+        examModels.removeIf(examModel -> !tasks.contains(examModel));
 
         if (!assignmentModels.isEmpty()) {
             emptyAssignments.setText("");
