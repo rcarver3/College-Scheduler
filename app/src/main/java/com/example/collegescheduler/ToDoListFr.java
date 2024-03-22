@@ -184,6 +184,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
                     }
                 }
             }
+            //
 
             // Add assignments if includeAssignments is true
             if (includeAssignments) {
