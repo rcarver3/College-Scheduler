@@ -42,6 +42,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
 
 
     Button homeBtn;
+    ImageButton filterBtn;
     private ListTaskAdapter taskAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,15 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         addAssignments.setVisibility(View.GONE);
         addExamText.setVisibility(View.GONE);
         addAssignmentsText.setVisibility(View.GONE);
+
+        filterBtn=findViewById(R.id.filterBtn);
+
+        filterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMultiChoiceDialog();
+            }
+        });
 
         RecyclerView tasksRecyclerView = findViewById(R.id.assignmentsRecyclerView3);
 
@@ -116,6 +126,89 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         });
 
     }
+
+    private void showMultiChoiceDialog() {
+        // Items to display in the dialog
+        final String[] items = new String[]{"Exams", "Assignments"};
+        // This array will hold the items' selection states
+        final boolean[] checkedItems = new boolean[]{false, false};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Filter by");
+
+        builder.setMultiChoiceItems(items, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                // Update the current focused item's checked status
+                checkedItems[which] = isChecked;
+                // You can also perform other actions based on item selection changes
+            }
+        });
+
+        // Adding "OK" button
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                boolean includeExams = checkedItems[0];
+                boolean includeAssignments = checkedItems[1];
+                filterTasksByLocation(includeExams, includeAssignments);
+                // Handle the "OK" click here
+                // For example, you can save the selections or perform actions based on them
+            }
+        });
+
+        // Adding "Cancel" button
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Handle the "Cancel" click here
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void filterTasksByLocation(boolean includeExams, boolean includeAssignments) {
+        ArrayList<ToDoListInterface> filteredList = new ArrayList<>();
+
+        for (ClassModel classModel : classModels) {
+            // Add exams if includeExams is true
+            if (includeExams) {
+                for (ExamModel exam : classModel.getExams()) {
+                    //filteredList.add(exam);
+                    if (!exam.getLoc().isEmpty()) { // Assuming exams have non-empty location
+                        filteredList.add(exam);
+                    }
+                }
+            }
+
+            // Add assignments if includeAssignments is true
+            if (includeAssignments) {
+                for (AssignmentModel assignment : classModel.getAssignments()) {
+                    // filteredList.add(assignment);
+                    if (assignment.getLoc().isEmpty()) { // Assuming assignments have empty location
+                        filteredList.add(assignment);
+                    }
+                }
+            }
+        }
+
+        // Update tasks and refresh RecyclerView
+        tasks.clear();
+        tasks.addAll(filteredList);
+        taskAdapter.notifyDataSetChanged();
+        if (tasks.isEmpty()) {
+            emptyTasks.setText("No tasks found");
+        } else {
+            emptyTasks.setText("");
+        }
+    }
+
+
+
 
     private void expandButtons() {
         addAssignments.setVisibility(View.VISIBLE);
