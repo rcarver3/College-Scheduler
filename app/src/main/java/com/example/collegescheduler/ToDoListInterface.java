@@ -12,7 +12,7 @@ public interface ToDoListInterface {
     public default String getDueTime() {
         return null;
     }
-    public default String getLocation(){
+    public default String getLoc(){
         return null;
     }
 }

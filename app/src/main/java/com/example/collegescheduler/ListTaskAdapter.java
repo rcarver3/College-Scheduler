@@ -57,7 +57,7 @@ public class ListTaskAdapter  extends RecyclerView.Adapter<ListTaskAdapter.MyVie
                         int pos = getAdapterPosition();
 
                         if (pos != RecyclerView.NO_POSITION) {
-                            recyclerViewInterface.onItemLongClick("ASSIGNMENT", pos);
+                            recyclerViewInterface.onItemLongClick("TASK", pos);
                         }
                     }
                     return true;
@@ -72,7 +72,7 @@ public class ListTaskAdapter  extends RecyclerView.Adapter<ListTaskAdapter.MyVie
         LayoutInflater inflater = LayoutInflater.from(ctx);
         View view  = inflater.inflate(R.layout.recycler_view_column, parent, false);
 
-        return new MyViewHolder(view, recyclerViewInterface);
+        return new ListTaskAdapter.MyViewHolder(view, recyclerViewInterface);
 
     }
 
@@ -83,7 +83,7 @@ public class ListTaskAdapter  extends RecyclerView.Adapter<ListTaskAdapter.MyVie
         holder.tvName.setText(task.getName());
         holder.tvDueDate.setText(task.getDueDate());
         holder.tvDueTime.setText(task.getDueTime());
-        holder.tvLocation.setText(task.getLocation());
+        holder.tvLocation.setText(task.getLoc());
     }
 
 
