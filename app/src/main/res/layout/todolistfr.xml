@@ -43,14 +43,15 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/assignmentsRecyclerView3"
-            android:layout_width="402dp"
-            android:layout_height="584dp"
-            app:layout_constraintBottom_toTopOf="@+id/toolbar3"
+            android:layout_width="413dp"
+            android:layout_height="642dp"
+            android:layout_marginBottom="59dp"
+            app:layout_constraintBottom_toTopOf="@+id/add_assignment_text3"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintHorizontal_bias="0.0"/>
+            app:layout_constraintVertical_bias="0.0" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar3"
