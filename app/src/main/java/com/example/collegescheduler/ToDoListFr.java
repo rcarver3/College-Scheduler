@@ -67,6 +67,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         emptyTasks = findViewById(R.id.empty_todo);
 
 
+
         addAssignments.setVisibility(View.GONE);
         addExamText.setVisibility(View.GONE);
         addAssignmentsText.setVisibility(View.GONE);
@@ -74,8 +75,15 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         RecyclerView tasksRecyclerView = findViewById(R.id.assignmentsRecyclerView3);
 
         for (ClassModel classModel : classModels) {
-            tasks.addAll(classModel.getExams());
-            tasks.addAll(classModel.getAssignments());
+            if (!(tasks.containsAll(classModel.getExams()))) {
+                tasks.addAll(classModel.getExams());
+            } else if (!(tasks.containsAll(classModel.getAssignments()))) {
+                tasks.addAll(classModel.getAssignments());
+            }
+        }
+
+        if (!tasks.isEmpty()) {
+            emptyTasks.setText("");
         }
 
         taskAdapter = new ListTaskAdapter(context, tasks, this);
@@ -288,7 +296,6 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 model.setLoc(input.getText().toString());
-                examModels.add(0, model);
                 tasks.add(0, model);
                 taskAdapter.notifyItemInserted(0);
                 // Do something with value!
@@ -314,23 +321,6 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         items.sort(Comparator.comparing(ToDoListInterface::getDueDate));
         return items;
     }
-
-
-    /*
-    private void addItem(View view) {
-        EditText input = findViewById(R.id.edit_text);
-        String itemText = input.getText().toString();
-
-        if (!(itemText.equals(""))){
-            ;
-            input.setText("");
-        }
-
-        else {
-            Toast.makeText(getApplicationContext(), "Please enter task..", Toast.LENGTH_SHORT).show();
-        }
-    }
-     */
 
     /*
     private void editItem(int position) {
@@ -376,24 +366,12 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle("Delete?");
-        if (model.equals("ASSIGNMENT")) {
-            builder.setMessage(String.format("Are you sure you want to delete %s?", assignmentModels.get(position).getName()));
-        } else if (model.equals("EXAM")) {
-            builder.setMessage(String.format("Are you sure you want to delete %s?", examModels.get(position).getName()));
-        }
+        builder.setMessage(String.format("Are you sure you want to delete %s?", tasks.get(position).getName()));
         builder.setPositiveButton("Confirm",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (model.equals("ASSIGNMENT")) {
-                            assignmentModels.remove(position);
-                            tasks.remove(position);
-                            taskAdapter.notifyItemRemoved(position);
-                            if (tasks.isEmpty()) {
-                                emptyTasks.setText(R.string.empty_todo);
-                            }
-                        } else if (model.equals("EXAM")) {
-                            examModels.remove(position);
+                        if (model.equals("TASK")) {
                             tasks.remove(position);
                             taskAdapter.notifyItemRemoved(position);
                             if (tasks.isEmpty()) {
