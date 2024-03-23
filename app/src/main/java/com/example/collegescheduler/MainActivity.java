@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
     Button exitBtn;
 
+    ArrayList<ToDoListInterface> tasks;
+
     Button calendarBtn;
 
     @Override
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("");
+
+        tasks = ToDoListFr.tasks;
 
         addClasses = findViewById(R.id.empty_classes);
         if (!classModels.isEmpty()) {
@@ -231,8 +235,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        ClassModel classModel = classModels.get(position);
+                        tasks.removeAll(classModel.getAssignments());
+                        tasks.removeAll(classModel.getExams());
                         classModels.remove(position);
                         adapter.notifyItemRemoved(position);
+                        ToDoListFr.taskAdapter.notifyItemRemoved(position);
                         if (classModels.isEmpty()) {
                             addClasses.setText(R.string.no_classes_yet);
                         }

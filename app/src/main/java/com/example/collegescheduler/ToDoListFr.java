@@ -26,7 +26,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
 
     Context context;
 
-    ArrayList<ClassModel> classModels = MainActivity.classModels;
+    ArrayList<ClassModel> classModels;
 
     Boolean isAllButtonsVisible;
     TextView emptyTasks;
@@ -41,9 +41,11 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
 
     Button homeBtn;
     ImageButton filterBtn;
-    private ListTaskAdapter taskAdapter;
+    protected static ListTaskAdapter taskAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
+        classModels = MainActivity.classModels;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.todolistfr);
         context = this;
@@ -172,14 +174,19 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
 
     private void filterTasksByLocation(boolean includeExams, boolean includeAssignments, boolean includeAll) {
         ArrayList<ToDoListInterface> filteredList = new ArrayList<>();
-
-        for (ClassModel classModel : classModels) {
             // Add exams if includeExams is true
             if (includeExams) {
-                for (ExamModel exam : classModel.getExams()) {
-                    //filteredList.add(exam);
-                    if (!exam.getLoc().isEmpty()) { // Assuming exams have non-empty location
-                        filteredList.add(exam);
+                for (ClassModel classModel : classModels) {
+                    for (ExamModel exam : classModel.getExams()) {
+                        //filteredList.add(exam);
+                        if (!exam.getLoc().isEmpty() && !filteredList.contains(exam)) { // Assuming exams have non-empty location
+                            filteredList.add(exam);
+                        }
+                    }
+                }
+                for (ToDoListInterface task : tasks) {
+                    if (task instanceof ExamModel && !filteredList.contains(task)) {
+                        filteredList.add(task);
                     }
                 }
             }
@@ -187,17 +194,23 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
 
             // Add assignments if includeAssignments is true
             if (includeAssignments) {
-                for (AssignmentModel assignment : classModel.getAssignments()) {
-                    // filteredList.add(assignment);
-                    if (assignment.getLoc().isEmpty()) { // Assuming assignments have empty location
-                        filteredList.add(assignment);
+                for (ClassModel classModel : classModels) {
+                    for (AssignmentModel assignment : classModel.getAssignments()) {
+                        // filteredList.add(assignment);
+                        if (assignment.getLoc().isEmpty() && !filteredList.contains(assignment)) { // Assuming assignments have empty location
+                            filteredList.add(assignment);
+                        }
+                    }
+                }
+                for (ToDoListInterface task : tasks) {
+                    if (task instanceof AssignmentModel && !filteredList.contains(task)) {
+                        filteredList.add(task);
                     }
                 }
             }
             if (includeAll) {
                 filteredList = tasks;
             }
-        }
 
         // Update tasks and refresh RecyclerView
         taskAdapter = new ListTaskAdapter(context, filteredList, this);
