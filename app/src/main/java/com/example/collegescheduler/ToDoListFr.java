@@ -21,8 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 
-import java.util.Comparator;
-
 public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterface{
     protected static ArrayList<ToDoListInterface> tasks = new ArrayList<>();
 
@@ -129,9 +127,9 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
 
     private void showMultiChoiceDialog() {
         // Items to display in the dialog
-        final String[] items = new String[]{"Exams", "Assignments"};
+        final String[] items = new String[]{"All", "Assignments", "Exams"};
         // This array will hold the items' selection states
-        final boolean[] checkedItems = new boolean[]{false, false};
+        final boolean[] checkedItems = new boolean[]{false, false, false};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -150,9 +148,10 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                boolean includeExams = checkedItems[0];
+                boolean includeAll = checkedItems[0];
                 boolean includeAssignments = checkedItems[1];
-                filterTasksByLocation(includeExams, includeAssignments);
+                boolean includeExams = checkedItems[2];
+                filterTasksByLocation(includeExams, includeAssignments, includeAll);
                 // Handle the "OK" click here
                 // For example, you can save the selections or perform actions based on them
             }
@@ -171,7 +170,7 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         dialog.show();
     }
 
-    private void filterTasksByLocation(boolean includeExams, boolean includeAssignments) {
+    private void filterTasksByLocation(boolean includeExams, boolean includeAssignments, boolean includeAll) {
         ArrayList<ToDoListInterface> filteredList = new ArrayList<>();
 
         for (ClassModel classModel : classModels) {
@@ -195,14 +194,18 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
                     }
                 }
             }
+            if (includeAll) {
+                filteredList = tasks;
+            }
         }
 
         // Update tasks and refresh RecyclerView
-        tasks.clear();
-        tasks.addAll(filteredList);
+        taskAdapter = new ListTaskAdapter(context, filteredList, this);
+        RecyclerView tasksRecyclerView = findViewById(R.id.assignmentsRecyclerView3);
+        tasksRecyclerView.setAdapter(taskAdapter);
         taskAdapter.notifyDataSetChanged();
         if (tasks.isEmpty()) {
-            emptyTasks.setText("No tasks found");
+            emptyTasks.setText(R.string.empty_todo);
         } else {
             emptyTasks.setText("");
         }
@@ -397,18 +400,6 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
             }
         });
         alert.show();
-    }
-
-    private ArrayList<ToDoListInterface> getSortedTodoItems() {
-        ArrayList<ToDoListInterface> items = new ArrayList<>();
-        // Assuming classModels is accessible and contains your data
-        for (ClassModel classModel : classModels) {
-            items.addAll(classModel.getAssignments()); // Ensure these lists actually hold TodoItemInterface objects
-            items.addAll(classModel.getExams());
-        }
-        // Sort items by due date; implement actual date comparison for real applications
-        items.sort(Comparator.comparing(ToDoListInterface::getDueDate));
-        return items;
     }
 
     /*

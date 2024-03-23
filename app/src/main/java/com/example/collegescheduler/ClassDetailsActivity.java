@@ -135,7 +135,6 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
             }
         });
     }
-    //
 
     private void expandButtons() {
         addAssignments.setVisibility(View.VISIBLE);
