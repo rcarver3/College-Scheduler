@@ -2,17 +2,19 @@ package com.example.collegescheduler;
 
 public interface ToDoListInterface {
 
-    public default String getDueDate() {
-        return null;
-    };
-    public default String getName() {
-        return null;
-    };
+    default void setName(String name) {}
 
-    public default String getDueTime() {
+    default String getDueDate() {
         return null;
     }
-    public default String getLoc(){
+    default String getName() {
+        return null;
+    }
+
+    default String getDueTime() {
+        return null;
+    }
+    default String getLoc(){
         return null;
     }
 }

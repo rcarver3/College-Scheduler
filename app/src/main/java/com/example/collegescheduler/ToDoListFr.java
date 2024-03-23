@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.widget.Toast;
 
 public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterface{
     protected static ArrayList<ToDoListInterface> tasks = new ArrayList<>();
@@ -415,23 +416,27 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         alert.show();
     }
 
-    /*
     private void editItem(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Edit Item");
+        builder.setTitle("Edit Task");
 
         final EditText input = new EditText(this);
-        input.setText(items.get(position).toString());
+        input.setText(tasks.get(position).getName());
         builder.setView(input);
 
-
-        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Update Name", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String itemText = input.getText().toString();
                 if (!itemText.equals("")) {
-                    items.set(position, itemText);
-                    itemsAdapter.notifyDataSetChanged();
+                    tasks.get(position).setName(itemText);
+                    if (tasks.get(position) instanceof AssignmentModel) {
+                        collectDueDate((AssignmentModel) tasks.get(position));
+                    } else {
+                        collectExamDate((ExamModel) tasks.get(position));
+                    }
+                    tasks.remove(position);
+                    taskAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getApplicationContext(), "Task cannot be empty.", Toast.LENGTH_SHORT).show();
                 }
@@ -448,10 +453,10 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         builder.show();
     }
 
-     */
 
     @Override
     public void onItemClick(int position) {
+        editItem(position);
     }
 
     @Override
