@@ -20,15 +20,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
-
-import java.util.Comparator;
+import android.widget.Toast;
 
 public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterface{
     protected static ArrayList<ToDoListInterface> tasks = new ArrayList<>();
 
     Context context;
 
-    ArrayList<ClassModel> classModels = MainActivity.classModels;
+    ArrayList<ClassModel> classModels;
 
     Boolean isAllButtonsVisible;
     TextView emptyTasks;
@@ -42,9 +41,12 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
 
 
     Button homeBtn;
-    private ListTaskAdapter taskAdapter;
+    ImageButton filterBtn;
+    protected static ListTaskAdapter taskAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
+        classModels = MainActivity.classModels;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.todolistfr);
         context = this;
@@ -66,6 +68,15 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         addAssignments.setVisibility(View.GONE);
         addExamText.setVisibility(View.GONE);
         addAssignmentsText.setVisibility(View.GONE);
+
+        filterBtn=findViewById(R.id.filterBtn);
+
+        filterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMultiChoiceDialog();
+            }
+        });
 
         RecyclerView tasksRecyclerView = findViewById(R.id.assignmentsRecyclerView3);
 
@@ -116,6 +127,106 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         });
 
     }
+
+    private void showMultiChoiceDialog() {
+        // Items to display in the dialog
+        final String[] items = new String[]{"All", "Assignments", "Exams"};
+        // This array will hold the items' selection states
+        final boolean[] checkedItems = new boolean[]{false, false, false};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Filter by");
+
+        builder.setMultiChoiceItems(items, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                // Update the current focused item's checked status
+                checkedItems[which] = isChecked;
+                // You can also perform other actions based on item selection changes
+            }
+        });
+
+        // Adding "OK" button
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                boolean includeAll = checkedItems[0];
+                boolean includeAssignments = checkedItems[1];
+                boolean includeExams = checkedItems[2];
+                filterTasksByLocation(includeExams, includeAssignments, includeAll);
+                // Handle the "OK" click here
+                // For example, you can save the selections or perform actions based on them
+            }
+        });
+
+        // Adding "Cancel" button
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Handle the "Cancel" click here
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void filterTasksByLocation(boolean includeExams, boolean includeAssignments, boolean includeAll) {
+        ArrayList<ToDoListInterface> filteredList = new ArrayList<>();
+            // Add exams if includeExams is true
+            if (includeExams) {
+                for (ClassModel classModel : classModels) {
+                    for (ExamModel exam : classModel.getExams()) {
+                        //filteredList.add(exam);
+                        if (!exam.getLoc().isEmpty() && !filteredList.contains(exam)) { // Assuming exams have non-empty location
+                            filteredList.add(exam);
+                        }
+                    }
+                }
+                for (ToDoListInterface task : tasks) {
+                    if (task instanceof ExamModel && !filteredList.contains(task)) {
+                        filteredList.add(task);
+                    }
+                }
+            }
+            //
+
+            // Add assignments if includeAssignments is true
+            if (includeAssignments) {
+                for (ClassModel classModel : classModels) {
+                    for (AssignmentModel assignment : classModel.getAssignments()) {
+                        // filteredList.add(assignment);
+                        if (assignment.getLoc().isEmpty() && !filteredList.contains(assignment)) { // Assuming assignments have empty location
+                            filteredList.add(assignment);
+                        }
+                    }
+                }
+                for (ToDoListInterface task : tasks) {
+                    if (task instanceof AssignmentModel && !filteredList.contains(task)) {
+                        filteredList.add(task);
+                    }
+                }
+            }
+            if (includeAll) {
+                filteredList = tasks;
+            }
+
+        // Update tasks and refresh RecyclerView
+        taskAdapter = new ListTaskAdapter(context, filteredList, this);
+        RecyclerView tasksRecyclerView = findViewById(R.id.assignmentsRecyclerView3);
+        tasksRecyclerView.setAdapter(taskAdapter);
+        taskAdapter.notifyDataSetChanged();
+        if (tasks.isEmpty()) {
+            emptyTasks.setText(R.string.empty_todo);
+        } else {
+            emptyTasks.setText("");
+        }
+    }
+
+
+
 
     private void expandButtons() {
         addAssignments.setVisibility(View.VISIBLE);
@@ -305,35 +416,27 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         alert.show();
     }
 
-    private ArrayList<ToDoListInterface> getSortedTodoItems() {
-        ArrayList<ToDoListInterface> items = new ArrayList<>();
-        // Assuming classModels is accessible and contains your data
-        for (ClassModel classModel : classModels) {
-            items.addAll(classModel.getAssignments()); // Ensure these lists actually hold TodoItemInterface objects
-            items.addAll(classModel.getExams());
-        }
-        // Sort items by due date; implement actual date comparison for real applications
-        items.sort(Comparator.comparing(ToDoListInterface::getDueDate));
-        return items;
-    }
-
-    /*
     private void editItem(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Edit Item");
+        builder.setTitle("Edit Task");
 
         final EditText input = new EditText(this);
-        input.setText(items.get(position).toString());
+        input.setText(tasks.get(position).getName());
         builder.setView(input);
 
-
-        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Update Name", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String itemText = input.getText().toString();
                 if (!itemText.equals("")) {
-                    items.set(position, itemText);
-                    itemsAdapter.notifyDataSetChanged();
+                    tasks.get(position).setName(itemText);
+                    if (tasks.get(position) instanceof AssignmentModel) {
+                        collectDueDate((AssignmentModel) tasks.get(position));
+                    } else {
+                        collectExamDate((ExamModel) tasks.get(position));
+                    }
+                    tasks.remove(position);
+                    taskAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getApplicationContext(), "Task cannot be empty.", Toast.LENGTH_SHORT).show();
                 }
@@ -350,10 +453,10 @@ public class ToDoListFr extends AppCompatActivity implements RecyclerViewInterfa
         builder.show();
     }
 
-     */
 
     @Override
     public void onItemClick(int position) {
+        editItem(position);
     }
 
     @Override

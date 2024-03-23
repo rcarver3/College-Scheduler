@@ -349,12 +349,16 @@ public class ClassDetailsActivity extends AppCompatActivity implements RecyclerV
                         if (model.equals("ASSIGNMENT")) {
                             assignmentModels.remove(position);
                             assignmentsAdapter.notifyItemRemoved(position);
+                            tasks.remove(position);
+                            ToDoListFr.taskAdapter.notifyDataSetChanged();
                             if (assignmentModels.isEmpty()) {
                                 emptyAssignments.setText(R.string.empty_todo);
                             }
                         } else if (model.equals("EXAM")) {
                             examModels.remove(position);
                             examsAdapter.notifyItemRemoved(position);
+                            tasks.remove(position);
+                            ToDoListFr.taskAdapter.notifyDataSetChanged();
                             if (examModels.isEmpty()) {
                                 emptyExams.setText(R.string.empty_todo);
                             }
